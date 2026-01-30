@@ -26,7 +26,7 @@ const Checkout = () => {
     deliveryMethod: 'novaposhta',
     comment: ''
   });
-
+  console.log(Phone, Mail);
   const handleChange = (e) => {
     setFormData({
       ...formData,
