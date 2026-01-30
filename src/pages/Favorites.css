@@ -1,0 +1,142 @@
+/* Favorites.css */
+
+/* Общие стили */
+.favorites-page,
+.favorites-empty-page {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Пустая страница */
+.favorites-empty-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+.empty-favorites-card {
+  max-width: 400px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e0e0e0;
+}
+
+.empty-favorites-content {
+  padding: 40px;
+  text-align: center;
+}
+
+.empty-favorites-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  color: #cbd5e1;
+  display: block;
+}
+
+.empty-favorites-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.empty-favorites-text {
+  font-size: 16px;
+  color: #64748b;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.empty-favorites-button {
+  display: inline-block;
+  background: #2563eb;
+  color: white;
+  padding: 12px 28px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.empty-favorites-button:hover {
+  background: #1d4ed8;
+}
+
+/* Страница с товарами */
+.favorites-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+.favorites-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 30px;
+  padding-top: 10px;
+}
+
+.favorites-heart-icon {
+  width: 32px;
+  height: 32px;
+  color: #ef4444;
+  fill: currentColor;
+}
+
+.favorites-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.favorites-count {
+  font-size: 18px;
+  color: #64748b;
+}
+
+/* Сетка товаров */
+.favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .favorites-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  
+  .favorites-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .favorites-title {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .favorites-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .empty-favorites-card {
+    margin: 0 16px;
+  }
+  
+  .empty-favorites-content {
+    padding: 30px 20px;
+  }
+}
