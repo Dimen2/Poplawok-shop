@@ -1,0 +1,67 @@
+/* Основной фон страницы */
+.product-page-main {
+    background-color: #ffffff;
+}
+
+/* Навигация */
+.breadcrumbs-bar {
+    background-color: #f9fafb;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+/* Фото товара */
+.product-image-wrapper img {
+    border: 1px solid #f0f0f0;
+    max-height: 550px;
+    object-fit: contain; /* Чтобы удочки не растягивались */
+}
+
+/* Стили вкладок (Tabs) */
+.tab-trigger-custom {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 2px solid transparent !important;
+    color: #9ca3af !important;
+    font-weight: 600 !important;
+    padding: 0 0 12px 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+.tab-trigger-custom[data-state="active"] {
+    color: #111827 !important;
+    border-bottom: 2px solid #111827 !important;
+}
+
+/* Таблица характеристик */
+.divide-y > div {
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.divide-y > div:last-child {
+    border-bottom: none;
+}
+
+/* Кнопки и плашки */
+.bg-blue-600 {
+    background-color: #3b82f6 !important;
+}
+
+.text-blue-600 {
+    color: #3b82f6 !important;
+}
+
+.bg-blue-50 {
+    background-color: #eff6ff !important; /* Тот самый светло-голубой */
+}
+
+/* Адаптив для мобилок */
+@media (max-width: 640px) {
+    .action-buttons-row {
+        flex-wrap: wrap;
+    }
+    .action-buttons-row > button:nth-child(2) {
+        width: 100%;
+        order: 3;
+    }
+}

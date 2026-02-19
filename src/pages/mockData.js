@@ -21,10 +21,10 @@ import Umbrella from "./Photos/Umbrella.jpg";
 import Wobbler from "./Photos/Wobbler.jpg";
 
 export const categories = [
-  { 
-    id: 1, 
-    name: 'Лижа', 
-    slug: 'spinning-rods', 
+  {
+    id: 1,
+    name: 'Лижа',
+    slug: 'spinning-rods',
     image: Lugha10g,
     subcategories: [
       { id: 101, name: '10г', slug: '10g', image: Lugha10g },
@@ -32,86 +32,90 @@ export const categories = [
       { id: 105, name: '100г', slug: '100g', image: Lugha100g }
     ]
   },
-  { 
-    id: 2, 
-    name: 'Ліска', 
-    slug: 'spinning-reels', 
+  {
+    id: 2,
+    name: 'Ліска',
+    slug: 'spinning-reels',
     image: Lestka1,
     subcategories: [
       { id: 201, name: '100м', slug: '100m', image: Lestka1 },
       { id: 202, name: '300м', slug: '300m', image: Lestka2 }
     ]
   },
-  { 
-    id: 3, 
-    name: 'Фідерні вудилища', 
-    slug: 'feeder-rods', 
+  {
+    id: 3,
+    name: 'Вудлища',
+    slug: 'feeder-rods',
     image: Fider,
-    subcategories: []
+    subcategories: [
+      { id: 201, name: 'Вершинки', slug: 'Вершинки', image: Fider },
+      { id: 202, name: 'Фідерні вудилища', slug: 'Фідерні вудилища', image: Fider },
+      { id: 202, name: 'Матчеві вудилища', slug: 'Матчеві вудилища', image: Fider }
+    ]
   },
-  { 
-    id: 4, 
-    name: 'Фідерні котушки', 
-    slug: 'feeder-reels', 
+  {
+    id: 4,
+    name: 'Фідерні котушки',
+    slug: 'feeder-reels',
     image: Coil,
     subcategories: []
   },
-  { 
-    id: 5, 
-    name: 'Коропові вудилища', 
-    slug: 'carp-rods', 
+  {
+    id: 5,
+    name: 'Коропові вудилища',
+    slug: 'carp-rods',
     image: Fider,
     subcategories: []
   },
-  { 
+  {
     id: 6,
-    name: 'Коропові котушки', 
-    slug: 'carp-reels', 
+    name: 'Коропові котушки',
+    slug: 'carp-reels',
     image: Coil,
     subcategories: []
   },
-  { 
-    id: 7, 
-    name: 'Жилки, волосінь', 
-    slug: 'fishing-line', 
+  {
+    id: 7,
+    name: 'Жилки, волосінь',
+    slug: 'fishing-line',
     image: Lestka1,
     subcategories: []
   },
-  { 
-    id: 8, 
-    name: 'Гачки', 
-    slug: 'hooks', 
+  {
+    id: 8,
+    name: 'Гачки',
+    slug: 'hooks',
     image: Hook,
     subcategories: []
   },
-  { 
-    id: 9, 
-    name: 'Приманки', 
-    slug: 'lures', 
+  {
+    id: 9,
+    name: 'Приманки',
+    slug: 'lures',
     image: Wobbler,
     subcategories: []
   },
-  { 
-    id: 10, 
-    name: 'Зимове оснащення', 
-    slug: 'winter-equipment', 
+  {
+    id: 10,
+    name: 'Зимове оснащення',
+    slug: 'winter-equipment',
     image: Fish,
     subcategories: []
   },
-  { 
-    id: 11, 
-    name: 'Одяг, взуття', 
-    slug: 'clothing', 
+  {
+    id: 11,
+    name: 'Одяг, взуття',
+    slug: 'clothing',
     image: Umbrella,
     subcategories: []
   },
-  { 
-    id: 12, 
-    name: 'Туризм, кемпінг', 
-    slug: 'camping', 
+  {
+    id: 12,
+    name: 'Туризм, кемпінг',
+    slug: 'camping',
     image: Umbrella,
     subcategories: []
-  }
+  },
 ];
 
 // ==============================================
@@ -123,7 +127,7 @@ export const products = [
   {
     id: 1,
     name: 'Спінінгове вудлище Azura Safina Thrower ST86M (10г)',
-    price: 7100,
+    price: 100,
     oldPrice: null,
     image: Lugha10g,
     category: 'spinning-rods',
@@ -146,8 +150,8 @@ export const products = [
   {
     id: 2,
     name: 'Спінінгове вудлище Shimano Catana CX 240 (10г)',
-    price: 4500,
-    oldPrice: 5200,
+    price: 150,
+    oldPrice: 200,
     image: Lugha10g,
     category: 'spinning-rods',
     subcategory: '10g',
@@ -166,7 +170,7 @@ export const products = [
     rating: 4.5,
     reviews: 42
   },
-  
+
   // ========== ЛИЖА - 50г ==========
   {
     id: 3,
@@ -214,7 +218,7 @@ export const products = [
     rating: 4.6,
     reviews: 18
   },
-  
+
   // ========== ЛИЖА - 100г ==========
   {
     id: 5,
@@ -262,7 +266,7 @@ export const products = [
     rating: 4.4,
     reviews: 15
   },
-  
+
   // ========== ЛІСКА - 100м ==========
   {
     id: 7,
@@ -308,7 +312,7 @@ export const products = [
     rating: 4.7,
     reviews: 23
   },
-  
+
   // ========== ЛІСКА - 300м ==========
   {
     id: 9,
@@ -354,7 +358,7 @@ export const products = [
     rating: 4.3,
     reviews: 27
   },
-  
+
   // ========== ФІДЕРНІ КОТУШКИ ==========
   {
     id: 11,
@@ -400,7 +404,7 @@ export const products = [
     rating: 4.7,
     reviews: 31
   },
-  
+
   // ========== ПРИМАНКИ ==========
   {
     id: 13,
@@ -445,7 +449,7 @@ export const products = [
     rating: 4.8,
     reviews: 89
   },
-  
+
   // ========== ФІДЕРНІ ВУДИЛИЩА ==========
   {
     id: 15,
@@ -469,7 +473,7 @@ export const products = [
     rating: 4.7,
     reviews: 52
   },
-  
+
   // ========== КЕМПІНГ ==========
   {
     id: 16,
@@ -515,7 +519,7 @@ export const products = [
     rating: 4.5,
     reviews: 34
   },
-  
+
   // ========== ГАЧКИ ==========
   {
     id: 18,
@@ -561,8 +565,7 @@ export const products = [
     rating: 4.9,
     reviews: 47
   },
-  
-  // ========== ОДЯГ ==========
+
   {
     id: 20,
     name: 'Термокостюм зимовий Azura XXL',
@@ -585,7 +588,7 @@ export const products = [
     rating: 4.9,
     reviews: 42
   },
-  
+
   // ========== КОРОПОВІ ВУДИЛИЩА ==========
   {
     id: 21,

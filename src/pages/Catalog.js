@@ -370,7 +370,7 @@ const allPhotos = [photo1, photo2, photo3, photo4, photo5, photo6, photo7, Lestk
                 <div className={`catalog-grid ${viewMode === 'list' ? 'list-view' : ''}`}>
                   {currentProducts.map((product, index) => {
                     const isFav = isFavorite(product.id);
-                    const productImage = getProductImage(product.id);
+                    const productImage = product.image; // Беремо фото з об'єкта товару
                     
                     return (
                       <div key={product.id} className="catalog-product-card">
@@ -394,6 +394,7 @@ const allPhotos = [photo1, photo2, photo3, photo4, photo5, photo6, photo7, Lestk
                           
                           <button
                             onClick={() => toggleFavorite(product)}
+
                             className={`favorite-btn ${isFav ? 'active' : ''}`}
                           >
                             <Heart size={20} />
