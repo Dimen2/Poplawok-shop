@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Youtube, Send, Phone, Mail, MapPin, Clock } from 'lucide-react';
+import './Footer.css'
 
 const Footer = () => {
   const [email, setEmail] = useState('');

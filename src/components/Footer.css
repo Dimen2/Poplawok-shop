@@ -1,0 +1,293 @@
+/* ========== FOOTER - ФУТЕР ========== */
+.footer {
+    background-color: #111827;
+    color: white;
+    margin-top: 0;
+}
+
+/* Секція підписки на розсилку (Синя шапка) */
+.newsletter {
+    background-color: #2563eb;
+    padding: 60px 0;
+    text-align: center;
+    margin-top: 0;
+}
+
+.newsletter-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.newsletter h3 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    color: white;
+}
+
+.newsletter p {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 32px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 12px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.newsletter-input {
+    flex: 1;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: white;
+}
+
+.newsletter-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+}
+
+.newsletter-button {
+    background-color: #111827;
+    color: white;
+    border: none;
+    padding: 14px 30px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+}
+
+.newsletter-button:hover {
+    background-color: #1f2937;
+}
+
+/* Основний контент футера */
+.footer-main {
+    padding: 60px 0;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 40px;
+}
+
+@media (min-width: 768px) {
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .footer-content {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.footer-section {
+    margin-bottom: 0;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.footer-logo-circle {
+    width: 40px;
+    height: 40px;
+    background-color: #2563eb;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    color: white;
+}
+
+.footer-logo-text {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+.footer-about {
+    color: #9ca3af;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.social-links {
+    display: flex;
+    gap: 16px;
+}
+
+.social-link {
+    color: #9ca3af;
+    transition: color 0.2s;
+}
+
+.social-link:hover {
+    color: white;
+}
+
+/* Заголовки секцій футера */
+.footer-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: white;
+}
+
+/* Списки посилань */
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-link-item {
+    margin-bottom: 12px;
+}
+
+.footer-link {
+    color: #9ca3af;
+    text-decoration: none;
+    transition: color 0.2s;
+    font-size: 15px;
+}
+
+.footer-link:hover {
+    color: white;
+}
+
+/* Контактна інформація */
+.contact-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    align-items: flex-start;
+}
+
+.contact-icon {
+    color: #9ca3af;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.contact-text {
+    color: #9ca3af;
+}
+
+.contact-text strong {
+    color: white;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.contact-text a {
+    color: #9ca3af;
+    text-decoration: none;
+}
+
+.contact-text a:hover {
+    color: white;
+}
+
+/* Нижня частина футера */
+.footer-bottom {
+    border-top: 1px solid #374151;
+    padding: 24px 0;
+}
+
+.footer-bottom-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .footer-bottom-content {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+    }
+}
+
+.copyright {
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+.legal-links {
+    display: flex;
+    gap: 24px;
+}
+
+.legal-link {
+    color: #9ca3af;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+}
+
+.legal-link:hover {
+    color: white;
+}
+
+/* ========== АДАПТИВНІСТЬ ДЛЯ ФУТЕРА ========== */
+@media (max-width: 768px) {
+    .newsletter {
+        padding: 40px 0;
+    }
+
+    .newsletter h3 {
+        font-size: 24px;
+    }
+
+    .newsletter p {
+        font-size: 16px;
+    }
+
+    .newsletter-form {
+        flex-direction: column;
+    }
+
+    .newsletter-button {
+        width: 100%;
+    }
+
+    .footer-main {
+        padding: 40px 0;
+    }
+
+    .footer-section {
+        margin-bottom: 30px;
+    }
+}

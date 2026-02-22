@@ -80,20 +80,19 @@ function Home() {
     return (
         <div>
             <div className="home-page">
-                <div className="page-container">
+                {/* Головний банер - виправлений для мобілок */}
+                <div className="hero-section">
                     <div className="hero-banner">
                         <img src={photo} alt="Акція" className="hero-image" />
                         <div className="hero-content">
-                            <div className="hero-text">
-                                <a
-                                    href="https://www.youtube.com/@Poplavok_"
-                                    className="header-social-link"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    <Youtube size={70} />
-                                </a>
-                            </div>
+                            <a
+                                href="https://www.youtube.com/@Poplavok_"
+                                className="youtube-link"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <Youtube size={70} />
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -113,7 +112,7 @@ function Home() {
                     </div>
 
                     <div className="carousel-main-container" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-                        <button onClick={handlePrev} className="side-nav-btn left">
+                        <button onClick={handlePrev} className="side-nav-btn left desktop-only">
                             <ChevronLeft size={28} />
                         </button>
 
@@ -128,7 +127,7 @@ function Home() {
                                     const isFav = isFavorite(product.id);
                                     const productImage = [photo2, photo3, photo4, photo5][index % 4] || photo2;
                                     return (
-                                        <div key={`${product.id}-${index}`} style={{ minWidth: 'calc(25% - 15px)', boxSizing: 'border-box' }}>
+                                        <div key={`${product.id}-${index}`} className="carousel-item">
                                             <div className="product-card">
                                                 <div className="product-image-container">
                                                     <Link to={`/product/${product.id}`}>
@@ -160,7 +159,7 @@ function Home() {
                             </div>
                         </div>
 
-                        <button onClick={handleNext} className="side-nav-btn right">
+                        <button onClick={handleNext} className="side-nav-btn right desktop-only">
                             <ChevronRight size={28} />
                         </button>
                     </div>
@@ -209,7 +208,9 @@ function Home() {
                                         <Link to={`/product/${product.id}`}>
                                             <img src={discountImage} alt={product.name} className="product-image" />
                                         </Link>
-                                        <button onClick={() => toggleFavorite(product)} className={`favorite-btn ${isFav ? 'active' : ''}`}><Heart size={20} fill={isFav ? "currentColor" : "none"} /></button>
+                                        <button onClick={() => toggleFavorite(product)} className={`favorite-btn ${isFav ? 'active' : ''}`}>
+                                            <Heart size={20} fill={isFav ? "currentColor" : "none"} />
+                                        </button>
                                     </div>
                                     <div className="product-info">
                                         <h3 className="product-name">{product.name}</h3>
@@ -217,7 +218,9 @@ function Home() {
                                             <span className="current-price">{product.price} грн</span>
                                             {product.oldPrice && <span className="old-price">{product.oldPrice} грн</span>}
                                         </div>
-                                        <button onClick={() => addToCart(product)} className="add-to-cart-btn"><ShoppingCart size={16} /> Додати в кошик</button>
+                                        <button onClick={() => addToCart(product)} className="add-to-cart-btn">
+                                            <ShoppingCart size={16} /> Додати в кошик
+                                        </button>
                                     </div>
                                 </div>
                             );
@@ -260,12 +263,16 @@ function Home() {
                                         <Link to={`/product/${product.id}`}>
                                             <img src={hitImage} alt={product.name} className="product-image" />
                                         </Link>
-                                        <button onClick={() => toggleFavorite(product)} className={`favorite-btn ${isFav ? 'active' : ''}`}><Heart size={20} fill={isFav ? "currentColor" : "none"} /></button>
+                                        <button onClick={() => toggleFavorite(product)} className={`favorite-btn ${isFav ? 'active' : ''}`}>
+                                            <Heart size={20} fill={isFav ? "currentColor" : "none"} />
+                                        </button>
                                     </div>
                                     <div className="product-info">
                                         <h3 className="product-name">{product.name}</h3>
                                         <div className="product-price"><span className="current-price">{product.price} грн</span></div>
-                                        <button onClick={() => addToCart(product)} className="add-to-cart-btn"><ShoppingCart size={16} /> Додати в кошик</button>
+                                        <button onClick={() => addToCart(product)} className="add-to-cart-btn">
+                                            <ShoppingCart size={16} /> Додати в кошик
+                                        </button>
                                     </div>
                                 </div>
                             );
