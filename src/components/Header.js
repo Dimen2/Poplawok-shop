@@ -7,7 +7,9 @@ import {
   User,
   Home,
   LayoutGrid,
-  MoreHorizontal
+  MoreHorizontal,
+  Menu,
+  X
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
@@ -18,12 +20,12 @@ const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSticky, setIsSticky] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { cartItemsCount, favorites } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  // Логіка фіксації шапки при скролі
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 120) {
@@ -36,6 +38,17 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
+
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
@@ -43,6 +56,10 @@ const Header = () => {
       setSearchQuery('');
       setIsSearchFocused(false);
     }
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
   };
 
   return (
@@ -53,9 +70,15 @@ const Header = () => {
             onClick={() => setIsSearchFocused(false)}
         />
 
+        {/* Затемнення фону при відкритому меню */}
+        <div
+            className={`menu-overlay ${isMenuOpen ? 'active' : ''}`}
+            onClick={closeMenu}
+        />
+
         <header className={`main-header ${isSticky ? 'sticky' : ''} ${isSearchFocused ? 'header-on-focus' : ''}`}>
 
-          {/* Верхня полоса (приховується на мобілках і при sticky) */}
+          {/* Верхня полоса (тільки десктоп) */}
           <div className={`header-top desktop-only ${isSticky ? 'hidden' : ''}`}>
             <div className="header-top-content">
               <div className="header-top-left">
@@ -68,12 +91,12 @@ const Header = () => {
             </div>
           </div>
 
-          {/* Основна шапка: Лого і Пошук */}
+          {/* Основна шапка */}
           <div className={`header-main ${isSticky ? 'header-main-sticky' : ''}`}>
             <div className="header-main-content">
 
               {/* Логотип */}
-              <Link to="/" className="logo">
+              <Link to="/" className="logo" onClick={closeMenu}>
                 <div className="logo-image-container">
                   <img src={logoImage} alt="логотип" className="logo-image" />
                 </div>
@@ -82,7 +105,7 @@ const Header = () => {
                 </div>
               </Link>
 
-              {/* Навігація в sticky режимі (тепер вона в центрі через CSS) */}
+              {/* Навігація в sticky режимі (тільки десктоп) */}
               {isSticky && (
                   <nav className="sticky-nav desktop-only">
                     <NavLink to="/catalog" className="sticky-nav-link">Каталог товарів</NavLink>
@@ -121,10 +144,19 @@ const Header = () => {
                   {cartItemsCount > 0 && <span className="badge">{cartItemsCount}</span>}
                 </Link>
               </div>
+
+              {/* Кнопка меню (три полоски) - ТІЛЬКИ ДЛЯ ТЕЛЕФОНІВ */}
+              <button
+                  className="mobile-menu-toggle"
+                  onClick={() => setIsMenuOpen(true)}
+                  aria-label="Відкрити меню"
+              >
+                <Menu size={24} />
+              </button>
             </div>
           </div>
 
-          {/* Навігація для ПК (приховується при sticky) */}
+          {/* Навігація для ПК */}
           <nav className={`header-nav desktop-only ${isSticky ? 'hidden' : ''}`}>
             <div className="nav-links">
               <NavLink to="/catalog" className="nav-link" data-testid="nav-catalog">Каталог товарів</NavLink>
@@ -136,7 +168,58 @@ const Header = () => {
           </nav>
         </header>
 
-        {/* НИЖНЯ ПАНЕЛЬ ДЛЯ МОБІЛЬНИХ */}
+        {/* ВИЇЗНЕ МЕНЮ - ТІЛЬКИ ДЛЯ ТЕЛЕФОНІВ */}
+        <div className={`mobile-side-menu ${isMenuOpen ? 'open' : ''}`}>
+          <div className="mobile-side-menu-header">
+            <div className="mobile-side-menu-logo">
+              <div className="logo-image-container">
+                <img src={logoImage} alt="логотип" className="logo-image" />
+              </div>
+              <div className="mobile-side-menu-title">Поплавок</div>
+            </div>
+            <button className="mobile-side-menu-close" onClick={closeMenu}>
+              <X size={24} />
+            </button>
+          </div>
+
+          <div className="mobile-side-menu-content">
+            {/* Всі пункти меню як на десктопі */}
+            <NavLink to="/catalog" className="mobile-side-menu-item" onClick={closeMenu}>
+              <LayoutGrid size={20} />
+              <span>Каталог товарів</span>
+            </NavLink>
+            <NavLink to="/novelty" className="mobile-side-menu-item" onClick={closeMenu}>
+              <span>Новинки</span>
+            </NavLink>
+            <NavLink to="/discounts" className="mobile-side-menu-item" onClick={closeMenu}>
+              <span>Знижки</span>
+            </NavLink>
+            <NavLink to="/hits" className="mobile-side-menu-item" onClick={closeMenu}>
+              <span>Хіт продажів</span>
+            </NavLink>
+            <NavLink to="/brands" className="mobile-side-menu-item" onClick={closeMenu}>
+              <span>Бренди</span>
+            </NavLink>
+
+            <div className="menu-divider"></div>
+
+            {/* Профіль, лайк, корзина */}
+            <NavLink to={user ? "/profile" : "/auth"} className="mobile-side-menu-item" onClick={closeMenu}>
+              <User size={20} />
+              <span>{user ? "Профіль" : "Увійти"}</span>
+            </NavLink>
+            <NavLink to="/favorites" className="mobile-side-menu-item" onClick={closeMenu}>
+              <Heart size={20} />
+              <span>Обране {favorites.length > 0 && `(${favorites.length})`}</span>
+            </NavLink>
+            <NavLink to="/cart" className="mobile-side-menu-item" onClick={closeMenu}>
+              <ShoppingCart size={20} />
+              <span>Кошик {cartItemsCount > 0 && `(${cartItemsCount})`}</span>
+            </NavLink>
+          </div>
+        </div>
+
+        {/* НИЖНЯ ПАНЕЛЬ ДЛЯ ТЕЛЕФОНІВ */}
         <div className="mobile-bottom-nav">
           <NavLink to="/" className="mobile-nav-item" data-testid="mobile-nav-home">
             <Home size={24} />
@@ -157,7 +240,7 @@ const Header = () => {
             <User size={24} />
             <span>Кабінет</span>
           </NavLink>
-          <div className="mobile-nav-item" data-testid="mobile-nav-more">
+          <div className="mobile-nav-item" data-testid="mobile-nav-more" onClick={() => setIsMenuOpen(true)}>
             <MoreHorizontal size={24} />
             <span>Більше</span>
           </div>

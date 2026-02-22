@@ -1,5 +1,3 @@
-/* Header.css - Оновлена версія з липкою шапкою */
-
 /* ========== ДЕСКТОПНА ВЕРСІЯ (від 769px) ========== */
 @media (min-width: 769px) {
     .desktop-only {
@@ -10,7 +8,10 @@
         display: none !important;
     }
 
-    .mobile-bottom-nav {
+    .mobile-bottom-nav,
+    .mobile-menu-toggle,
+    .mobile-side-menu,
+    .menu-overlay {
         display: none !important;
     }
 
@@ -243,8 +244,8 @@
         margin: 0 auto;
         padding: 0 20px;
         display: flex;
-        justify-content: center; /* ЭТО ВЫРАВНИВАЕТ ПО ЦЕНТРУ */
-        gap: 40px; /* Увеличил отступ между кнопками для красоты */
+        justify-content: center;
+        gap: 40px;
     }
 
     .nav-link {
@@ -295,12 +296,10 @@
         box-shadow: 0 2px 10px rgba(0,0,0,0.15);
     }
 
-    /* Відступ для контенту при sticky */
     .main-header.sticky + * {
         padding-top: 60px;
     }
 
-    /* Затемнення */
     .search-overlay {
         position: fixed;
         top: 0;
@@ -399,6 +398,139 @@
         color: #0F2A44;
     }
 
+    /* Кнопка меню (три полоски) - СПРАВА */
+    .mobile-menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        padding: 8px;
+        margin-left: 5px;
+    }
+
+    /* Затемнення фону для меню */
+    .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1001;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease;
+    }
+
+    .menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Виїзне меню зліва */
+    .mobile-side-menu {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        width: 280px;
+        height: 100%;
+        background-color: white;
+        z-index: 1002;
+        transition: left 0.3s ease;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+    }
+
+    .mobile-side-menu.open {
+        left: 0;
+    }
+
+    /* Заголовок меню */
+    .mobile-side-menu-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px;
+        border-bottom: 1px solid #eee;
+        background-color: #0F2A44;
+        color: white;
+    }
+
+    .mobile-side-menu-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .mobile-side-menu-logo .logo-image-container {
+        width: 35px;
+        height: 35px;
+        background: white;
+        border-radius: 50%;
+        border: 2px solid white;
+    }
+
+    .mobile-side-menu-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: white;
+    }
+
+    .mobile-side-menu-close {
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Контент меню */
+    .mobile-side-menu-content {
+        flex: 1;
+        padding: 16px 0;
+    }
+
+    .mobile-side-menu-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 20px;
+        text-decoration: none;
+        color: #333;
+        font-size: 16px;
+        transition: background-color 0.2s;
+        border-bottom: 1px solid #f5f5f5;
+    }
+
+    .mobile-side-menu-item:hover {
+        background-color: #f5f5f5;
+    }
+
+    .mobile-side-menu-item.active {
+        background-color: #e3f2fd;
+        color: #0088ff;
+        border-left: 3px solid #0088ff;
+    }
+
+    .mobile-side-menu-item svg {
+        color: #0F2A44;
+        min-width: 20px;
+    }
+
+    .menu-divider {
+        height: 10px;
+        background-color: #f0f0f0;
+        margin: 10px 0;
+    }
+
     /* Нижня панель */
     .mobile-bottom-nav {
         position: fixed;
@@ -425,6 +557,9 @@
         font-size: 11px;
         gap: 2px;
         cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
     }
 
     .mobile-nav-item.active {
@@ -488,5 +623,10 @@
     .mobile-nav-item svg {
         width: 20px;
         height: 20px;
+    }
+
+    .mobile-side-menu {
+        width: 250px;
+        left: -250px;
     }
 }
