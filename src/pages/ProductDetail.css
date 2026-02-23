@@ -1,67 +1,580 @@
-/* Основной фон страницы */
-.product-page-main {
+/* ProductDetail.css */
+
+/* Основний фон */
+.product-page {
     background-color: #ffffff;
+    min-height: 100vh;
 }
 
-/* Навигация */
-.breadcrumbs-bar {
+/* Хлібні крихти */
+.breadcrumbs {
     background-color: #f9fafb;
-    border-bottom: 1px solid #f3f4f6;
+    border-bottom: 1px solid #f0f0f0;
+    padding: 12px 0;
 }
 
-/* Фото товара */
-.product-image-wrapper img {
+.breadcrumbs-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+.breadcrumbs-list {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #6b7280;
+    flex-wrap: wrap;
+}
+
+.breadcrumbs-list a {
+    color: #6b7280;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.breadcrumbs-list a:hover {
+    color: #2563eb;
+}
+
+.breadcrumbs-list span {
+    color: #1f2937;
+    font-weight: 500;
+}
+
+.breadcrumbs-separator {
+    color: #9ca3af;
+}
+
+/* Контейнер */
+.product-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px 16px;
+}
+
+/* Основний блок товару */
+.product-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
+}
+
+/* Блок з фото */
+.product-gallery {
+    position: relative;
+}
+
+.product-image-card {
+    background: white;
     border: 1px solid #f0f0f0;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.product-image {
+    width: 100%;
+    height: auto;
     max-height: 550px;
-    object-fit: contain; /* Чтобы удочки не растягивались */
+    object-fit: contain;
+    display: block;
 }
 
-/* Стили вкладок (Tabs) */
-.tab-trigger-custom {
-    background: transparent !important;
-    border: none !important;
-    border-bottom: 2px solid transparent !important;
-    color: #9ca3af !important;
-    font-weight: 600 !important;
-    padding: 0 0 12px 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
+/* Бейджі */
+.product-badges {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 10;
 }
 
-.tab-trigger-custom[data-state="active"] {
-    color: #111827 !important;
-    border-bottom: 2px solid #111827 !important;
+.product-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Таблица характеристик */
-.divide-y > div {
+.badge-new {
+    background: #10b981;
+}
+
+.badge-hit {
+    background: #f97316;
+}
+
+.badge-discount {
+    background: #ef4444;
+}
+
+/* Інформація про товар */
+.product-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 12px;
+    line-height: 1.2;
+}
+
+/* Рейтинг */
+.product-rating {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.rating-stars {
+    display: flex;
+    gap: 4px;
+    color: #fbbf24;
+}
+
+.rating-stars svg {
+    width: 18px;
+    height: 18px;
+}
+
+.rating-stars .star-filled {
+    fill: #fbbf24;
+}
+
+.rating-stars .star-empty {
+    color: #d1d5db;
+}
+
+.rating-count {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+/* Ціна */
+.product-price-block {
+    margin-bottom: 20px;
+}
+
+.product-current-price {
+    font-size: 42px;
+    font-weight: 800;
+    color: #2563eb;
+    line-height: 1;
+}
+
+.product-old-price {
+    font-size: 20px;
+    color: #9ca3af;
+    text-decoration: line-through;
+    margin-left: 12px;
+    font-weight: 400;
+}
+
+/* Наявність */
+.product-stock {
+    margin-bottom: 24px;
+}
+
+.stock-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.stock-in {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.stock-out {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* Опис */
+.product-description {
+    color: #4b5563;
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 32px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 24px;
+}
+
+/* Блок дій (кількість + кнопки) */
+.product-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+/* Лічильник кількості */
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background-color: #f9fafb;
+    height: 48px;
+}
+
+.quantity-btn {
+    width: 40px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #4b5563;
+    transition: color 0.2s;
+}
+
+.quantity-btn:hover {
+    color: #2563eb;
+}
+
+.quantity-value {
+    padding: 0 16px;
+    font-weight: 700;
+    font-size: 18px;
+    min-width: 50px;
+    text-align: center;
+}
+
+/* Кнопка додавання в кошик */
+.add-to-cart-btn {
+    flex: 1;
+    height: 48px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    min-width: 180px;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #1d4ed8;
+}
+
+.add-to-cart-btn:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
+
+/* Кнопка обраного */
+.favorite-btn {
+    width: 48px;
+    height: 48px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.favorite-btn:hover {
+    border-color: #2563eb;
+}
+
+.favorite-btn.active {
+    color: #2563eb;
+    border-color: #2563eb;
+}
+
+/* Плашка загальної вартості */
+.total-price-card {
+    background-color: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 16px;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.total-price-label {
+    color: #1e3a8a;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.total-price-value {
+    font-size: 28px;
+    font-weight: 800;
+    color: #2563eb;
+}
+
+/* Таби (вкладки) */
+.product-tabs {
+    background: white;
+    border: 1px solid #f0f0f0;
+    border-radius: 16px;
+    margin-bottom: 48px;
+    overflow: hidden;
+}
+
+.tabs-header {
+    display: flex;
+    gap: 32px;
+    padding: 0 24px;
+    border-bottom: 1px solid #f0f0f0;
+    background: white;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.tabs-header::-webkit-scrollbar {
+    display: none;
+}
+
+.tab-trigger {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 16px 0;
+    font-weight: 600;
+    color: #9ca3af;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    font-size: 16px;
+}
+
+.tab-trigger.active {
+    color: #1f2937;
+    border-bottom-color: #1f2937;
+}
+
+.tab-content {
+    padding: 24px;
+}
+
+/* Характеристики */
+.specs-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.spec-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 0;
     border-bottom: 1px solid #f3f4f6;
 }
 
-.divide-y > div:last-child {
+.spec-item:last-child {
     border-bottom: none;
 }
 
-/* Кнопки и плашки */
-.bg-blue-600 {
-    background-color: #3b82f6 !important;
+.spec-label {
+    color: #6b7280;
+    font-weight: 500;
 }
 
-.text-blue-600 {
-    color: #3b82f6 !important;
+.spec-value {
+    color: #1f2937;
+    font-weight: 600;
 }
 
-.bg-blue-50 {
-    background-color: #eff6ff !important; /* Тот самый светло-голубой */
+/* Опис у табі */
+.description-text {
+    color: #4b5563;
+    line-height: 1.8;
+    font-size: 15px;
 }
 
-/* Адаптив для мобилок */
-@media (max-width: 640px) {
+/* Відгуки */
+.reviews-empty {
+    padding: 40px;
+    text-align: center;
+    color: #9ca3af;
+    font-size: 16px;
+}
+
+/* Схожі товари */
+.related-products {
+    margin-top: 48px;
+}
+
+.related-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 24px;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 24px;
+}
+
+/* ========== МОБІЛЬНА АДАПТАЦІЯ ========== */
+@media (max-width: 768px) {
+    .product-main {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .product-title {
+        font-size: 24px;
+    }
+
+    .product-current-price {
+        font-size: 32px;
+    }
+
+    .product-old-price {
+        font-size: 18px;
+    }
+
+    .product-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .quantity-selector {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .add-to-cart-btn {
+        width: 100%;
+    }
+
+    .favorite-btn {
+        width: 100%;
+        height: 48px;
+    }
+
     .action-buttons-row {
+        display: flex;
+        gap: 12px;
         flex-wrap: wrap;
     }
-    .action-buttons-row > button:nth-child(2) {
-        width: 100%;
-        order: 3;
+
+    .action-buttons-row .quantity-selector {
+        width: auto;
+        flex: 0 0 auto;
+    }
+
+    .action-buttons-row .add-to-cart-btn {
+        flex: 1;
+    }
+
+    .total-price-card {
+        padding: 16px;
+    }
+
+    .total-price-value {
+        font-size: 22px;
+    }
+
+    .tabs-header {
+        gap: 20px;
+        padding: 0 16px;
+    }
+
+    .tab-trigger {
+        font-size: 14px;
+        padding: 14px 0;
+    }
+
+    .tab-content {
+        padding: 16px;
+    }
+
+    .spec-item {
+        flex-direction: column;
+        gap: 6px;
+        padding: 12px 0;
+    }
+
+    .spec-label {
+        font-size: 14px;
+    }
+
+    .spec-value {
+        font-size: 15px;
     }
 }
+
+@media (max-width: 480px) {
+    .product-container {
+        padding: 20px 12px;
+    }
+
+    .product-title {
+        font-size: 20px;
+    }
+
+    .product-current-price {
+        font-size: 28px;
+    }
+
+    .action-buttons-row {
+        flex-direction: column;
+    }
+
+    .action-buttons-row .quantity-selector {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .total-price-card {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+
+    .breadcrumbs-list {
+        font-size: 12px;
+    }
+
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (min-width: 640px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .products-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
