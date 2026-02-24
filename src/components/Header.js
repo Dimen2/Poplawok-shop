@@ -9,7 +9,9 @@ import {
   LayoutGrid,
   MoreHorizontal,
   Menu,
-  X
+  X,
+  Phone,
+  MapPin
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
@@ -82,8 +84,14 @@ const Header = () => {
           <div className={`header-top desktop-only ${isSticky ? 'hidden' : ''}`}>
             <div className="header-top-content">
               <div className="header-top-left">
-                <span>+380 68 219 96 33</span>
-                <span>2 магазини</span>
+                <div className="header-top-item">
+                  <Phone size={16} />
+                  <span>+380 68 219 96 33</span>
+                </div>
+                <div className="header-top-item">
+                  <MapPin size={16} />
+                  <span>2 магазини</span>
+                </div>
               </div>
               <div className="header-top-right">
                 <span>Доставка по всій Україні</span>

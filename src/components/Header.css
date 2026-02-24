@@ -41,6 +41,19 @@
         gap: 24px;
     }
 
+    .header-top-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #ffffff;
+    }
+
+    .header-top-item svg {
+        color: white;
+        width: 16px;
+        height: 16px;
+    }
+
     .header-top-right {
         display: flex;
         align-items: center;
@@ -114,6 +127,8 @@
     .logo-text.hidden {
         display: none;
     }
+
+
 
     /* Sticky навігація */
     .sticky-nav {
