@@ -1,134 +1,135 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { toast } from '../hooks/use-toast';
 
 const CartContext = createContext();
 
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
-    throw new Error('useCart must be used within CartProvider');
+    throw new Error('useCart must be used within a CartProvider');
   }
   return context;
 };
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
   const [favorites, setFavorites] = useState([]);
 
+  // Завантаження з localStorage при старті
   useEffect(() => {
-    // Завантаження з localStorage
-    const storedCart = localStorage.getItem('cart');
-    const storedFavorites = localStorage.getItem('favorites');
-    
-    if (storedCart) {
-      setCart(JSON.parse(storedCart));
-    }
-    if (storedFavorites) {
-      setFavorites(JSON.parse(storedFavorites));
+    try {
+      const savedCart = localStorage.getItem('cart');
+      const savedFavorites = localStorage.getItem('favorites');
+
+      if (savedCart) {
+        setCartItems(JSON.parse(savedCart));
+      }
+      if (savedFavorites) {
+        setFavorites(JSON.parse(savedFavorites));
+      }
+    } catch (error) {
+      console.error('Error loading from localStorage:', error);
     }
   }, []);
 
+  // Збереження в localStorage при зміні
   useEffect(() => {
-    // Збереження в localStorage
-    localStorage.setItem('cart', JSON.stringify(cart));
-  }, [cart]);
+    try {
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+    } catch (error) {
+      console.error('Error saving cart to localStorage:', error);
+    }
+  }, [cartItems]);
 
   useEffect(() => {
-    localStorage.setItem('favorites', JSON.stringify(favorites));
+    try {
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+    } catch (error) {
+      console.error('Error saving favorites to localStorage:', error);
+    }
   }, [favorites]);
 
+  // Додавання в корзину
   const addToCart = (product, quantity = 1) => {
-    setCart(prevCart => {
-      const existingItem = prevCart.find(item => item.id === product.id);
-      
+    setCartItems(prev => {
+      const existingItem = prev.find(item => item.id === product.id);
+
       if (existingItem) {
-        toast({
-          title: 'Оновлено',
-          description: `Кількість "${product.name}" оновлено в кошику`
-        });
-        return prevCart.map(item =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
+        return prev.map(item =>
+            item.id === product.id
+                ? { ...item, quantity: item.quantity + quantity }
+                : item
         );
+      } else {
+        return [...prev, { ...product, quantity }];
       }
-      
-      toast({
-        title: 'Додано до кошика',
-        description: `"${product.name}" додано до кошика`
-      });
-      return [...prevCart, { ...product, quantity }];
     });
   };
 
-  const removeFromCart = (productId) => {
-    setCart(prevCart => prevCart.filter(item => item.id !== productId));
-    toast({
-      title: 'Видалено',
-      description: 'Товар видалено з кошика'
-    });
-  };
-
-  const updateQuantity = (productId, quantity) => {
-    if (quantity <= 0) {
+  // Оновлення кількості
+  const updateQuantity = (productId, newQuantity) => {
+    if (newQuantity < 1) {
       removeFromCart(productId);
       return;
     }
-    
-    setCart(prevCart =>
-      prevCart.map(item =>
-        item.id === productId ? { ...item, quantity } : item
-      )
+
+    setCartItems(prev =>
+        prev.map(item =>
+            item.id === productId
+                ? { ...item, quantity: newQuantity }
+                : item
+        )
     );
   };
 
+  // Видалення з корзини
+  const removeFromCart = (productId) => {
+    setCartItems(prev => prev.filter(item => item.id !== productId));
+  };
+
+  // Очищення корзини
   const clearCart = () => {
-    setCart([]);
-    toast({
-      title: 'Кошик очищено',
-      description: 'Всі товари видалено з кошика'
-    });
+    setCartItems([]);
   };
 
-  const toggleFavorite = (product) => {
-    setFavorites(prevFavorites => {
-      const isFavorite = prevFavorites.some(item => item.id === product.id);
-      
-      if (isFavorite) {
-        toast({
-          title: 'Видалено з обраного',
-          description: `"${product.name}" видалено з обраного`
-        });
-        return prevFavorites.filter(item => item.id !== product.id);
-      }
-      
-      toast({
-        title: 'Додано до обраного',
-        description: `"${product.name}" додано до обраного`
-      });
-      return [...prevFavorites, product];
-    });
-  };
+  // Загальна кількість товарів
+  const cartItemsCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
+  // Загальна сума
+  const cartTotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+  // Перевірка чи товар в обраному
   const isFavorite = (productId) => {
     return favorites.some(item => item.id === productId);
   };
 
-  const cartTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const cartItemsCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-
-  const value = {
-    cart,
-    favorites,
-    addToCart,
-    removeFromCart,
-    updateQuantity,
-    clearCart,
-    toggleFavorite,
-    isFavorite,
-    cartTotal,
-    cartItemsCount
+  // Додати/видалити з обраного
+  const toggleFavorite = (product) => {
+    setFavorites(prev => {
+      const exists = prev.some(item => item.id === product.id);
+      if (exists) {
+        return prev.filter(item => item.id !== product.id);
+      } else {
+        return [...prev, product];
+      }
+    });
   };
 
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+  const value = {
+    cartItems,
+    favorites,
+    addToCart,
+    updateQuantity,
+    removeFromCart,
+    clearCart,
+    cartItemsCount,
+    cartTotal,
+    isFavorite,
+    toggleFavorite
+  };
+
+  return (
+      <CartContext.Provider value={value}>
+        {children}
+      </CartContext.Provider>
+  );
 };

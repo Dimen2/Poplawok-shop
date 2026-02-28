@@ -150,7 +150,10 @@ const ProductDetail = () => {
 
                 {/* Кнопка додавання в кошик */}
                 <button
-                    onClick={() => addToCart(product, quantity)}
+                    onClick={() => {
+                      console.log('Додаємо товар:', product);
+                      addToCart(product, quantity);
+                    }}
                     className="add-to-cart-btn"
                     disabled={!product.inStock}
                 >

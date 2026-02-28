@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, ShoppingCart, Star } from 'lucide-react'; // Додав іконки
+import { Heart, ShoppingCart, Star } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
 import { useCart } from '../context/CartContext';
-
+import './Favorites.css'; // Додайте цей імпорт
 
 const Favorites = () => {
   const { favorites, addToCart, toggleFavorite, isFavorite } = useCart();
@@ -40,32 +40,41 @@ const Favorites = () => {
           </div>
           <div className="favorites-grid">
             {favorites.map(product => (
-                /* Малюємо картку прямо тут, щоб не шукати ProductCard */
-                <div key={product.id} className="product-card-custom">
-                  <div className="image-wrapper">
+                <div key={product.id} className="product-card">
+                  <div className="product-image-container">
                     <Link to={`/product/${product.id}`}>
-                      <img src={product.image} alt={product.name} className="product-img" />
+                      <img
+                          src={product.image || '/placeholder-image.jpg'}
+                          alt={product.name}
+                          className="product-image"
+                      />
                     </Link>
-                    {product.isNew && <div className="badge-new">Новинка</div>}
+                    {product.isNew && (
+                        <div className="product-badges">
+                          <span className="badge badge-new">Новинка</span>
+                        </div>
+                    )}
                     <button
-                        className="fav-overlay-btn is-fav"
+                        className={`favorite-btn ${isFavorite(product.id) ? 'active' : ''}`}
                         onClick={() => toggleFavorite(product)}
                     >
-                      <Heart size={20} fill="currentColor" />
+                      <Heart size={20} fill={isFavorite(product.id) ? "currentColor" : "none"} />
                     </button>
                   </div>
 
-                  <div className="product-details">
-                    <h3 className="product-title">
+                  <div className="product-info">
+                    <h3 className="product-name">
                       <Link to={`/product/${product.id}`}>{product.name}</Link>
                     </h3>
-                    <div className="price-tag">{product.price} грн</div>
+                    <div className="product-price">
+                      <span className="current-price">{product.price} грн</span>
+                    </div>
                     <button
-                        className="buy-btn"
+                        className="add-to-cart-btn"
                         onClick={() => addToCart(product)}
                         disabled={!product.inStock}
                     >
-                      <ShoppingCart size={18} />
+                      <ShoppingCart size={16} />
                       <span>{product.inStock ? 'Додати в кошик' : 'Немає'}</span>
                     </button>
                   </div>
