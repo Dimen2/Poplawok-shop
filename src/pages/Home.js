@@ -4,8 +4,12 @@ import { ArrowRight, ShoppingCart, Heart, ChevronLeft, ChevronRight, Youtube } f
 import { useCart } from '../context/CartContext';
 import { banners, products, fishTypes, categories } from './mockData';
 
-// Импорт ваших фотографий
+// Импорт верхней шапки (банерів) - ВИПРАВЛЕНО НАЗВИ
 import photo from "./Photos/Chat.png";
+import header2 from './Photos/header2.png'; // маленька літера h
+import header3 from './Photos/header3.png'; // маленька літера h
+
+// Інші фото
 import photo2 from "./Photos/Fider.jpg";
 import photo3 from "./Photos/Fish.jpg";
 import photo4 from "./Photos/Hook.jpg";
@@ -31,6 +35,41 @@ import spinnex from "./Photos/spinnex.png";
 
 function Home() {
     const { addToCart, toggleFavorite, isFavorite } = useCart();
+
+    // --- КАРУСЕЛЬ ДЛЯ ВЕРХНЬОГО БАНЕРА ---
+    const bannerImages = [photo, header2, header3];
+    const [bannerIndex, setBannerIndex] = useState(0);
+    const bannerIntervalRef = useRef(null);
+
+    // Автоматичне перемикання кожні 7 секунд
+    useEffect(() => {
+        startBannerInterval();
+        return () => clearInterval(bannerIntervalRef.current);
+    }, []);
+
+    const startBannerInterval = () => {
+        if (bannerIntervalRef.current) {
+            clearInterval(bannerIntervalRef.current);
+        }
+        bannerIntervalRef.current = setInterval(() => {
+            handleBannerNext();
+        }, 7000);
+    };
+
+    const handleBannerNext = () => {
+        setBannerIndex((prev) => (prev + 1) % bannerImages.length);
+        startBannerInterval();
+    };
+
+    const handleBannerPrev = () => {
+        setBannerIndex((prev) => (prev - 1 + bannerImages.length) % bannerImages.length);
+        startBannerInterval();
+    };
+
+    const goToBanner = (index) => {
+        setBannerIndex(index);
+        startBannerInterval();
+    };
 
     // --- ЛОГИКА ПЛАВНОЙ КАРУСЕЛИ ДЛЯ НОВИНОК ---
     const noveltyProducts = products.filter(p => p.isNew);
@@ -80,10 +119,51 @@ function Home() {
     return (
         <div>
             <div className="home-page">
-                {/* Головний банер - виправлений для мобілок */}
+                {/* Головний банер з каруселлю */}
                 <div className="hero-section">
                     <div className="hero-banner">
-                        <img src={photo} alt="Акція" className="hero-image" />
+                        {/* Стрілки для банеру */}
+                        <button
+                            className="banner-arrow banner-arrow-left"
+                            onClick={handleBannerPrev}
+                            aria-label="Попередній банер"
+                        >
+                            <ChevronLeft size={30} />
+                        </button>
+
+                        <button
+                            className="banner-arrow banner-arrow-right"
+                            onClick={handleBannerNext}
+                            aria-label="Наступний банер"
+                        >
+                            <ChevronRight size={30} />
+                        </button>
+
+                        {/* Зображення банеру */}
+                        <div className="banner-images">
+                            {bannerImages.map((img, idx) => (
+                                <img
+                                    key={idx}
+                                    src={img}
+                                    alt={`Банер ${idx + 1}`}
+                                    className={`banner-image ${idx === bannerIndex ? 'active' : ''}`}
+                                />
+                            ))}
+                        </div>
+
+                        {/* Індикатори (точки) */}
+                        <div className="banner-dots">
+                            {bannerImages.map((_, idx) => (
+                                <button
+                                    key={idx}
+                                    className={`banner-dot ${idx === bannerIndex ? 'active' : ''}`}
+                                    onClick={() => goToBanner(idx)}
+                                    aria-label={`Перейти до банеру ${idx + 1}`}
+                                />
+                            ))}
+                        </div>
+
+                        {/* YouTube кнопка */}
                         <div className="hero-content">
                             <a
                                 href="https://www.youtube.com/@Poplavok_"

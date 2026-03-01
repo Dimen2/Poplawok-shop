@@ -60,6 +60,7 @@
     color: white !important;
     padding: 12px 30px !important;
     border-radius: 8px !important;
+    border: none;
 }
 
 /* Кошик з товарами */
@@ -197,14 +198,9 @@
 .cart-item-remove {
     background: none;
     border: none;
-    color: #9ca3af;
+    color: #ef4444;
     cursor: pointer;
     padding: 8px;
-    transition: color 0.2s;
-}
-
-.cart-item-remove:hover {
-    color: #ef4444;
 }
 
 /* Блок замовлення */

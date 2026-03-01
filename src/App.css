@@ -41,11 +41,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease;
-}
-
-.youtube-link:hover {
-  transform: scale(1.1);
 }
 
 .youtube-link svg {
@@ -53,12 +48,14 @@
   width: 70px;
   height: 70px;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  margin-top: 286px;
 }
 
 @media (max-width: 768px) {
   .youtube-link svg {
     width: 50px;
     height: 50px;
+    margin-top: 142px;
   }
 }
 
@@ -986,6 +983,7 @@ body, html {
 
 .catalog-product-card .badge-new {
   background-color: #10b981;
+
 }
 
 .catalog-product-card .badge-hit {
@@ -1452,4 +1450,137 @@ body, html {
 .nav-arrow:hover {
   background: #3b82f6;
   color: white;
+}
+
+/* ========== КАРУСЕЛЬ ДЛЯ ВЕРХНЬОГО БАНЕРА ========== */
+.hero-banner {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .hero-banner {
+    height: 200px;
+  }
+}
+
+.banner-images {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.banner-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  z-index: 1;
+}
+
+.banner-image.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+/* Стрілки для банеру */
+.banner-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  color: white;
+  transition: background 0.3s;
+  backdrop-filter: blur(5px);
+}
+
+.banner-arrow:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.banner-arrow-left {
+  left: 20px;
+}
+
+.banner-arrow-right {
+  right: 20px;
+}
+
+@media (max-width: 768px) {
+  .banner-arrow {
+    width: 40px;
+    height: 40px;
+  }
+
+  .banner-arrow-left {
+    left: 10px;
+  }
+
+  .banner-arrow-right {
+    right: 10px;
+  }
+}
+
+/* Індикатори (точки) */
+.banner-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.banner-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s;
+}
+
+.banner-dot.active {
+  background: white;
+  transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+  .banner-dot {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+/* YouTube кнопка */
+
+@media (max-width: 768px) {
+  .hero-content {
+    bottom: 15px;
+    right: 15px;
+  }
+
+  .youtube-link svg {
+    width: 40px;
+    height: 40px;
+  }
 }

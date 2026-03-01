@@ -107,15 +107,15 @@ const Cart = () => {
                 <span>{cartItemsCount}</span>
               </div>
 
-              {/*<div className="order-row">*/}
-              {/*  <span>Сума:</span>*/}
-              {/*  <span>{cartTotal} грн</span>*/}
-              {/*</div>*/}
+              <div className="order-row">
+                <span>Сума:</span>
+                <span>{cartTotal} грн</span>
+              </div>
 
-              {/*<div className="order-row">*/}
-              {/*  <span>Доставка:</span>*/}
-              {/*  <span className="delivery-free">Безкоштовно</span>*/}
-              {/*</div>*/}
+              <div className="order-row">
+                <span>Доставка:</span>
+                <span className="delivery-free">Безкоштовно</span>
+              </div>
 
               <div className="order-total">
                 <span>До сплати:</span>
