@@ -1,13 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Minus, Plus, Trash2 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
+import { toast } from '../hooks/use-toast';
 import './Cart.css';
 
 const Cart = () => {
   const cartContext = useCart();
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
   if (!cartContext) {
     return (
@@ -23,7 +27,26 @@ const Cart = () => {
     );
   }
 
-  const { cartItems = [], updateQuantity, removeFromCart, cartTotal = 0, cartItemsCount = 0 } = cartContext;
+  const {
+    cartItems = [],
+    updateQuantity,
+    removeFromCart,
+    cartTotal = 0,
+    cartItemsCount = 0
+  } = cartContext;
+
+  // 🔥 Функция перехода на оформление
+  const handleCheckout = () => {
+    if (!user) {
+      toast({
+        title: "Потрібна авторизація",
+        description: "Щоб оформити замовлення, увійдіть у свій акаунт"
+      });
+      navigate('/auth');
+    } else {
+      navigate('/checkout');
+    }
+  };
 
   // Якщо кошик порожній
   if (!cartItems || cartItems.length === 0) {
@@ -34,7 +57,9 @@ const Cart = () => {
               <CardContent className="empty-cart-content">
                 <ShoppingCart className="empty-cart-icon" />
                 <h2 className="empty-cart-title">Кошик порожній</h2>
-                <p className="empty-cart-text">Додайте товари до кошика, щоб зробити замовлення</p>
+                <p className="empty-cart-text">
+                  Додайте товари до кошика, щоб зробити замовлення
+                </p>
                 <Link to="/catalog">
                   <Button className="empty-cart-button">
                     Перейти до каталогу
@@ -53,7 +78,7 @@ const Cart = () => {
           <h1 className="cart-title">Кошик</h1>
 
           <div className="cart-content">
-            {/* Ліва частина - список товарів */}
+            {/* Ліва частина */}
             <div className="cart-items">
               {cartItems.map((item) => (
                   <div key={item.id} className="cart-item">
@@ -65,20 +90,30 @@ const Cart = () => {
                       <Link to={`/product/${item.id}`} className="cart-item-name">
                         {item.name}
                       </Link>
-                      <div className="cart-item-price">{item.price} грн за штуку</div>
+                      <div className="cart-item-price">
+                        {item.price} грн за штуку
+                      </div>
                     </div>
 
                     <div className="cart-item-quantity">
                       <button
                           className="quantity-btn"
-                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          onClick={() =>
+                              updateQuantity(item.id, item.quantity - 1)
+                          }
                       >
                         <Minus size={14} />
                       </button>
-                      <span className="quantity-value">{item.quantity}</span>
+
+                      <span className="quantity-value">
+                    {item.quantity}
+                  </span>
+
                       <button
                           className="quantity-btn"
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          onClick={() =>
+                              updateQuantity(item.id, item.quantity + 1)
+                          }
                       >
                         <Plus size={14} />
                       </button>
@@ -98,7 +133,7 @@ const Cart = () => {
               ))}
             </div>
 
-            {/* Права частина - замовлення */}
+            {/* Права частина */}
             <div className="cart-order">
               <h2 className="order-title">Замовлення</h2>
 
@@ -119,10 +154,16 @@ const Cart = () => {
 
               <div className="order-total">
                 <span>До сплати:</span>
-                <span className="total-price">{cartTotal} грн</span>
+                <span className="total-price">
+                {cartTotal} грн
+              </span>
               </div>
 
-              <button className="checkout-btn">
+              {/* 🔥 ВАЖНА КНОПКА */}
+              <button
+                  className="checkout-btn"
+                  onClick={handleCheckout}
+              >
                 Оформити замовлення
               </button>
 

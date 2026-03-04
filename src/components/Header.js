@@ -53,8 +53,12 @@ const Header = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/catalog?search=${searchQuery}`);
+    const query = searchQuery.trim();
+
+    if (query) {
+      // Логика: если введено только число, мы можем добавить спец. параметр или просто передать как есть
+      // Твой компонент Catalog должен будет проверить: если query — это число, искать по ID
+      navigate(`/catalog?search=${encodeURIComponent(query)}`);
       setSearchQuery('');
       setIsSearchFocused(false);
     }
@@ -124,12 +128,12 @@ const Header = () => {
                   </nav>
               )}
 
-              {/* Пошук */}
+              {/* Пошук — Теперь ищет и по названию, и по ID */}
               <form onSubmit={handleSearch} className="search-container">
                 <div className="search-wrapper">
                   <input
                       type="text"
-                      placeholder="Пошук товарів..."
+                      placeholder="Пошук (назва або № ID)..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       onFocus={() => setIsSearchFocused(true)}
@@ -137,7 +141,7 @@ const Header = () => {
                       className="search-input"
                       data-testid="search-input"
                   />
-                  <Search size={20} className="search-icon" />
+                  <Search size={20} className="search-icon" onClick={handleSearch} style={{cursor: 'pointer'}} />
                 </div>
               </form>
 
@@ -191,7 +195,6 @@ const Header = () => {
           </div>
 
           <div className="mobile-side-menu-content">
-            {/* Всі пункти меню як на десктопі */}
             <NavLink to="/catalog" className="mobile-side-menu-item" onClick={closeMenu}>
               <LayoutGrid size={20} />
               <span>Каталог товарів</span>
@@ -211,7 +214,6 @@ const Header = () => {
 
             <div className="menu-divider"></div>
 
-            {/* Профіль, лайк, корзина */}
             <NavLink to={user ? "/profile" : "/auth"} className="mobile-side-menu-item" onClick={closeMenu}>
               <User size={20} />
               <span>{user ? "Профіль" : "Увійти"}</span>

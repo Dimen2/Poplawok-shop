@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CreditCard, MapPin, User } from 'lucide-react';
+import { CreditCard, MapPin, User, Percent, Edit2 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { RadioGroup, RadioGroupItem } from '../components/ui/radio-group';
-import { Textarea } from '../components/ui/textarea';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { toast } from '../hooks/use-toast';
+import { db } from '../firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import './Checkout.css';
 
 const Checkout = () => {
-  const { cart, cartTotal, clearCart } = useCart();
+  const { cartItems = [], cartTotal = 0, clearCart } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -27,6 +29,16 @@ const Checkout = () => {
     comment: ''
   });
 
+  const [promoCode, setPromoCode] = useState('');
+  const [discount, setDiscount] = useState(0);
+  const [deliveryPrice] = useState(0); // Безкоштовна доставка
+
+  useEffect(() => {
+    if (cartItems.length === 0) {
+      navigate('/cart');
+    }
+  }, [cartItems, navigate]);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -34,192 +46,267 @@ const Checkout = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handlePromoSubmit = (e) => {
     e.preventDefault();
-
-    toast({
-      title: 'Замовлення оформлено!',
-      description: 'Дякуємо за ваше замовлення. Ми зв’яжемось з вами найближчим часом.'
-    });
-
-    clearCart();
-    setTimeout(() => {
-      navigate('/');
-    }, 2000);
+    // Тут логіка перевірки промокоду
+    if (promoCode === 'DISCOUNT10') {
+      setDiscount(cartTotal * 0.1);
+      toast({ title: 'Промокод застосовано!', description: 'Знижка 10%' });
+    } else {
+      toast({ title: 'Помилка', description: 'Невірний промокод' });
+    }
   };
 
-  if (cart.length === 0) {
-    // Используем useEffect для навигации, чтобы избежать ошибок рендеринга
-    setTimeout(() => navigate('/cart'), 0);
-    return null;
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await addDoc(collection(db, "orders"), {
+        userId: user?.uid || null,
+        customer: formData,
+        items: cartItems,
+        total: cartTotal - discount,
+        status: "new",
+        createdAt: serverTimestamp()
+      });
+
+      toast({
+        title: 'Замовлення оформлено!',
+        description: 'Замовлення успішно збережено.'
+      });
+
+      clearCart();
+
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
+
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Помилка",
+        description: "Не вдалося зберегти замовлення"
+      });
+    }
+  };
+
+  const finalTotal = cartTotal - discount;
 
   return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold mb-8">Оформлення замовлення</h1>
+      <div className="checkout-page">
+        <div className="checkout-container">
+          <h1 className="checkout-title">Оформлення замовлення</h1>
 
           <form onSubmit={handleSubmit}>
-            <div className="grid lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2 space-y-6">
-                {/* Контактні дані */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <User className="h-5 w-5" />
-                      Контактні дані
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div>
-                      <Label htmlFor="name">Прізвище та ім'я</Label>
-                      <Input
-                          id="name"
+            <div className="checkout-grid">
+              {/* Ліва колонка */}
+              <div className="checkout-main">
+                {/* Контактна інформація */}
+                <div className="checkout-card">
+                  <div className="checkout-card-header">
+                    <User size={20} />
+                    <h2>Контактні дані</h2>
+                    <span className="contact-edit">Редагувати</span>
+                  </div>
+                  <div className="checkout-card-content">
+                    <div className="contact-info">
+                      <div className="contact-info-row">
+                        <span className="contact-info-label">Прізвище та ім'я</span>
+                        <span className="contact-info-value">{formData.name || 'Іваненко Іван'}</span>
+                      </div>
+                      <div className="contact-info-row">
+                        <span className="contact-info-label">Телефон *</span>
+                        <span className="contact-info-value">{formData.phone || '+380501234567'}</span>
+                      </div>
+                      <div className="contact-info-row">
+                        <span className="contact-info-label">Email *</span>
+                        <span className="contact-info-value">{formData.email || 'email@example.com'}</span>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label className="form-label">Прізвище та ім'я</label>
+                      <input
+                          type="text"
                           name="name"
                           value={formData.name}
                           onChange={handleChange}
-                          required
+                          className="form-input"
                           placeholder="Іваненко Іван"
+                          required
                       />
                     </div>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="phone">Телефон *</Label>
-                        <Input
-                            id="phone"
-                            name="phone"
+
+                    <div className="form-row">
+                      <div className="form-group">
+                        <label className="form-label">Телефон <span>*</span></label>
+                        <input
                             type="tel"
+                            name="phone"
                             value={formData.phone}
                             onChange={handleChange}
-                            required
+                            className="form-input"
                             placeholder="+380501234567"
+                            required
                         />
                       </div>
-                      <div>
-                        <Label htmlFor="email">Email *</Label>
-                        <Input
-                            id="email"
-                            name="email"
+
+                      <div className="form-group">
+                        <label className="form-label">Email <span>*</span></label>
+                        <input
                             type="email"
+                            name="email"
                             value={formData.email}
                             onChange={handleChange}
-                            required
+                            className="form-input"
                             placeholder="email@example.com"
+                            required
                         />
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
 
                 {/* Доставка */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <MapPin className="h-5 w-5" />
-                      Доставка
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div>
-                      <Label>Спосіб доставки</Label>
-                      <RadioGroup
-                          value={formData.deliveryMethod}
-                          onValueChange={(value) => setFormData({ ...formData, deliveryMethod: value })}
-                          className="mt-2"
-                      >
-                        <div className="flex items-center space-x-2 p-3 border rounded-lg">
-                          <RadioGroupItem value="novaposhta" id="novaposhta" />
-                          <Label htmlFor="novaposhta" className="cursor-pointer flex-1">
-                            <div className="font-semibold">Нова Пошта</div>
-                            <div className="text-sm text-gray-600">Доставка у відділення</div>
-                          </Label>
-                        </div>
-                        <div className="flex items-center space-x-2 p-3 border rounded-lg">
-                          <RadioGroupItem value="courier" id="courier" />
-                          <Label htmlFor="courier" className="cursor-pointer flex-1">
-                            <div className="font-semibold">Кур'єр</div>
-                            <div className="text-sm text-gray-600">Доставка за адресою</div>
-                          </Label>
-                        </div>
-                        <div className="flex items-center space-x-2 p-3 border rounded-lg">
-                          <RadioGroupItem value="pickup" id="pickup" />
-                          <Label htmlFor="pickup" className="cursor-pointer flex-1">
-                            <div className="font-semibold">Самовивіз</div>
-                            <div className="text-sm text-gray-600">З магазину</div>
-                          </Label>
-                        </div>
-                      </RadioGroup>
-                    </div>
-                    <div>
-                      <Label htmlFor="city">Місто *</Label>
-                      <Input id="city" name="city" value={formData.city} onChange={handleChange} required placeholder="Київ" />
-                    </div>
-                    <div>
-                      <Label htmlFor="address">Адреса / Відділення *</Label>
-                      <Input id="address" name="address" value={formData.address} onChange={handleChange} required placeholder="Відділення №21" />
-                    </div>
-                  </CardContent>
-                </Card>
+                <div className="checkout-card">
+                  <div className="checkout-card-header">
+                    <MapPin size={20} />
+                    <h2>Доставка</h2>
+                  </div>
+                  <div className="checkout-card-content">
+                    <div className="form-group">
+                      <label className="form-label">Спосіб доставки</label>
+                      <div className="radio-group">
+                        <label className={`radio-option ${formData.deliveryMethod === 'novaposhta' ? 'selected' : ''}`}>
+                          <input
+                              type="radio"
+                              name="deliveryMethod"
+                              value="novaposhta"
+                              checked={formData.deliveryMethod === 'novaposhta'}
+                              onChange={handleChange}
+                          />
+                          <div>
+                            <div style={{ fontWeight: 500 }}>Нова Пошта</div>
+                            <div style={{ fontSize: '13px', color: '#64748b' }}>Доставка у відділення</div>
+                          </div>
+                        </label>
 
-                {/* Оплата */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <CreditCard className="h-5 w-5" />
-                      Оплата
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <RadioGroup value={formData.paymentMethod} onValueChange={(value) => setFormData({ ...formData, paymentMethod: value })}>
-                      <div className="flex items-center space-x-2 p-3 border rounded-lg">
-                        <RadioGroupItem value="card" id="card" />
-                        <Label htmlFor="card" className="cursor-pointer flex-1">Оплата картою онлайн</Label>
-                      </div>
-                      <div className="flex items-center space-x-2 p-3 border rounded-lg">
-                        <RadioGroupItem value="cash" id="cash" />
-                        <Label htmlFor="cash" className="cursor-pointer flex-1">Готівкою при отриманні</Label>
-                      </div>
-                    </RadioGroup>
-                  </CardContent>
-                </Card>
+                        <label className={`radio-option ${formData.deliveryMethod === 'courier' ? 'selected' : ''}`}>
+                          <input
+                              type="radio"
+                              name="deliveryMethod"
+                              value="courier"
+                              checked={formData.deliveryMethod === 'courier'}
+                              onChange={handleChange}
+                          />
+                          <div>
+                            <div style={{ fontWeight: 500 }}>Укр Пошта</div>
+                            <div style={{ fontSize: '13px', color: '#64748b' }}>Доставка за адресою</div>
+                          </div>
+                        </label>
 
-                {/* Коментар */}
-                <Card>
-                  <CardHeader><CardTitle>Коментар до замовлення</CardTitle></CardHeader>
-                  <CardContent>
-                    <Textarea name="comment" value={formData.comment} onChange={handleChange} placeholder="Додаткові побажання..." rows={4} />
-                  </CardContent>
-                </Card>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label className="form-label">Місто <span>*</span></label>
+                      <input
+                          type="text"
+                          name="city"
+                          value={formData.city}
+                          onChange={handleChange}
+                          className="form-input"
+                          placeholder="Київ"
+                          required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label className="form-label">Адреса / Відділення <span>*</span></label>
+                      <input
+                          type="text"
+                          name="address"
+                          value={formData.address}
+                          onChange={handleChange}
+                          className="form-input"
+                          placeholder="вул. Хрещатик, 1 або Відділення №21"
+                          required
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              {/* Підсумок */}
-              <div className="lg:col-span-1">
-                <Card className="sticky top-24">
-                  <CardHeader><CardTitle>Ваше замовлення</CardTitle></CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-3 max-h-64 overflow-y-auto">
-                      {cart.map(item => (
-                          <div key={item.id} className="flex gap-3 text-sm">
-                            <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded" />
-                            <div className="flex-1 min-w-0">
-                              <p className="font-medium truncate">{item.name}</p>
-                              <p className="text-gray-600">{item.quantity} шт × {item.price} грн</p>
+              {/* Права колонка - замовлення */}
+              <div className="checkout-sidebar">
+                <div className="order-card">
+                  <div className="order-header">
+                    <h3>Ваше замовлення</h3>
+                  </div>
+                  <div className="order-content">
+                    <div className="order-items">
+                      {cartItems.map(item => (
+                          <div key={item.id} className="order-item">
+                            <div className="order-item-image">
+                              <img src={item.image} alt={item.name} />
                             </div>
-                            <div className="font-semibold">{item.price * item.quantity} грн</div>
+                            <div className="order-item-info">
+
+                              <div className="order-item-name">{item.name}</div>
+                              <div className="order-item-meta">
+                                <span className="order-item-quantity">Кількість: {item.quantity} шт</span>
+                                <span className="order-item-price">{item.price * item.quantity} грн</span>
+                              </div>
+                            </div>
                           </div>
                       ))}
                     </div>
-                    <div className="border-t pt-4 space-y-2">
-                      <div className="flex justify-between"><span>Сума:</span><span className="font-semibold">{cartTotal} грн</span></div>
-                      <div className="flex justify-between"><span>Доставка:</span><span className="font-semibold text-green-600">Безкоштовно</span></div>
-                      <div className="border-t pt-2 flex justify-between items-center">
-                        <span className="text-lg font-bold">До сплати:</span>
-                        <span className="text-2xl font-bold text-blue-600">{cartTotal} грн</span>
+
+                    {/* Промокод */}
+                    <div className="promo-code">
+                      <form onSubmit={handlePromoSubmit} className="promo-input">
+                        <input
+                            type="text"
+                            placeholder="Застосувати промокод"
+                            value={promoCode}
+                            onChange={(e) => setPromoCode(e.target.value)}
+                            className="form-input"
+                        />
+                        <button type="submit" className="promo-btn">ОК</button>
+                      </form>
+                    </div>
+
+                    {/* Розрахунки */}
+                    <div className="order-calculations">
+                      <div className="calc-row">
+                        <span>Сума:</span>
+                        <span>{cartTotal} грн</span>
+                      </div>
+                      {discount > 0 && (
+                          <div className="calc-row discount">
+                            <span>Знижка:</span>
+                            <span>-{discount} грн</span>
+                          </div>
+                      )}
+                      <div className="calc-row delivery">
+                        <span>Доставка:</span>
+                        <span>Безкоштовно</span>
+                      </div>
+                      <div className="calc-row total">
+                        <span>До сплати:</span>
+                        <span className="total-amount">{finalTotal} грн</span>
                       </div>
                     </div>
-                    <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 h-12">Підтвердити замовлення</Button>
-                  </CardContent>
-                </Card>
+
+                    <button type="submit" className="checkout-btn">
+                      Оформити замовлення
+                    </button>
+
+                    <div className="agreement-text">
+                      Натискаючи кнопку оформити замовлення ви даєте згоду на обробку персональних даних та приймаєте угоду користувача
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </form>

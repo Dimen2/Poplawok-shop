@@ -1,0 +1,460 @@
+/* Checkout.css */
+
+/* Загальні стилі */
+.checkout-page {
+    min-height: 100vh;
+    background-color: #f8fafc;
+    padding: 40px 0;
+}
+
+.checkout-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.checkout-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #0F2A44;
+    margin-bottom: 30px;
+}
+
+/* Сітка */
+.checkout-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 30px;
+}
+
+/* Ліва колонка */
+.checkout-main {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Картки */
+.checkout-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    border: 1px solid #eef2f6;
+}
+
+.checkout-card-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #eef2f6;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.checkout-card-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #0F2A44;
+    margin: 0;
+}
+
+.checkout-card-header svg {
+    color: #2563eb;
+    width: 20px;
+    height: 20px;
+}
+
+.checkout-card-content {
+    padding: 24px;
+}
+
+/* Форми */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.form-label span {
+    color: #ef4444;
+    margin-left: 4px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: all 0.2s;
+    background-color: #f8fafc;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #2563eb;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* Радіо групи */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: #f8fafc;
+}
+
+.radio-option:hover {
+    border-color: #2563eb;
+    background-color: #f0f9ff;
+}
+
+.radio-option.selected {
+    border-color: #2563eb;
+    background-color: #f0f9ff;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
+}
+
+.radio-option input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    accent-color: #2563eb;
+}
+
+.radio-option label {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1e293b;
+    cursor: pointer;
+}
+
+/* Права колонка - замовлення */
+.checkout-sidebar {
+    position: sticky;
+    top: 100px;
+    align-self: flex-start;
+}
+
+.order-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    border: 1px solid #eef2f6;
+}
+
+.order-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #eef2f6;
+}
+
+.order-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #0F2A44;
+    margin: 0;
+}
+
+.order-content {
+    padding: 24px;
+}
+
+/* Список товарів */
+.order-items {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding-right: 8px;
+}
+
+.order-items::-webkit-scrollbar {
+    width: 6px;
+}
+
+.order-items::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.order-items::-webkit-scrollbar-thumb {
+    background: #2563eb;
+    border-radius: 10px;
+}
+
+.order-item {
+    display: flex;
+    gap: 12px;
+    padding: 16px 0;
+    border-bottom: 1px solid #eef2f6;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.order-item-image {
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background-color: #f8fafc;
+    border: 1px solid #eef2f6;
+}
+
+.order-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.order-item-info {
+    flex: 1;
+}
+
+.order-item-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1e293b;
+    margin-bottom: 6px;
+    line-height: 1.4;
+}
+
+.order-item-sku {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.order-item-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-item-quantity {
+    font-size: 13px;
+    color: #64748b;
+}
+
+.order-item-price {
+    font-weight: 600;
+    color: #2563eb;
+}
+
+/* Промокод */
+.promo-code {
+    margin: 20px 0;
+    padding: 20px 0;
+    border-top: 1px dashed #e2e8f0;
+    border-bottom: 1px dashed #e2e8f0;
+}
+
+.promo-input {
+    display: flex;
+    gap: 10px;
+}
+
+.promo-input .form-input {
+    flex: 1;
+}
+
+.promo-btn {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0 20px;
+    font-weight: 500;
+    color: #2563eb;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.promo-btn:hover {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+}
+
+/* Розрахунки */
+.order-calculations {
+    margin: 20px 0;
+}
+
+.calc-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 15px;
+    color: #475569;
+}
+
+.calc-row.discount {
+    color: #10b981;
+}
+
+.calc-row.delivery {
+    color: #64748b;
+}
+
+.calc-row.total {
+    font-weight: 700;
+    font-size: 18px;
+    color: #0F2A44;
+    border-top: 2px solid #e2e8f0;
+    margin-top: 12px;
+    padding-top: 16px;
+}
+
+.total-amount {
+    color: #0F2A44;
+    font-size: 22px;
+}
+
+/* Кнопка */
+.checkout-btn {
+    width: 100%;
+    background: #0F2A44;
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    margin: 20px 0 12px;
+}
+
+
+/* Згода */
+.agreement-text {
+    font-size: 12px;
+    color: #64748b;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.agreement-text a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.agreement-text a:hover {
+    text-decoration: underline;
+}
+
+/* Секція контактних даних */
+.contact-info {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.contact-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.contact-info-label {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.contact-info-value {
+    font-weight: 500;
+    color: #0F2A44;
+}
+
+.contact-edit {
+    color: #2563eb;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.contact-edit:hover {
+    text-decoration: underline;
+}
+
+/* ========== АДАПТИВНІСТЬ ========== */
+@media (max-width: 1024px) {
+    .checkout-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .checkout-sidebar {
+        position: static;
+    }
+}
+
+@media (max-width: 768px) {
+    .checkout-page {
+        padding: 20px 0 80px;
+    }
+
+    .checkout-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .order-items {
+        max-height: 300px;
+    }
+
+    .order-item-image {
+        width: 60px;
+        height: 60px;
+    }
+
+    .total-amount {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .checkout-card-header {
+        padding: 16px 20px;
+    }
+
+    .checkout-card-content {
+        padding: 20px;
+    }
+
+    .radio-option {
+        padding: 14px;
+    }
+
+    .order-item {
+        gap: 10px;
+    }
+}

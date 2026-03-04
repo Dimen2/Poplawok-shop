@@ -13,6 +13,7 @@ import Auth from './pages/Auth';
 import Favorites from './pages/Favorites';
 import { ToastProvider } from './hooks/use-toast';
 import './App.css';
+import Admin from './pages/Admin';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
                   <Route path="/checkout" element={<Checkout />} />
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/favorites" element={<Favorites />} />
+                  <Route path="/admin" element={<Admin />} />
                   {/* Додаткові маршрути */}
                   <Route path="/novelty" element={<Catalog />} />
                   <Route path="/discounts" element={<Catalog />} />
