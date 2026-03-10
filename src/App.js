@@ -14,38 +14,40 @@ import Favorites from './pages/Favorites';
 import { ToastProvider } from './hooks/use-toast';
 import './App.css';
 import Admin from './pages/Admin';
+import ScrollToTop from './components/ScrollToTop'; // Імпортуємо компонент
 
 function App() {
   return (
-    <Router>
-      <AuthProvider>
-        <CartProvider>
-          <ToastProvider>
-            <div className="min-h-screen flex flex-col">
-              <Header />
-              <main className="flex-grow">
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/catalog" element={<Catalog />} />
-                  <Route path="/catalog/:category" element={<Catalog />} />
-                  <Route path="/product/:id" element={<ProductDetail />} />
-                  <Route path="/cart" element={<Cart />} />
-                  <Route path="/checkout" element={<Checkout />} />
-                  <Route path="/auth" element={<Auth />} />
-                  <Route path="/favorites" element={<Favorites />} />
-                  <Route path="/admin" element={<Admin />} />
-                  {/* Додаткові маршрути */}
-                  <Route path="/novelty" element={<Catalog />} />
-                  <Route path="/discounts" element={<Catalog />} />
-                  <Route path="/hits" element={<Catalog />} />
-                </Routes>
-              </main>
-              <Footer />
-            </div>
-          </ToastProvider>
-        </CartProvider>
-      </AuthProvider>
-    </Router>
+      <Router>
+        <AuthProvider>
+          <CartProvider>
+            <ToastProvider>
+              <ScrollToTop /> {/* Додаємо компонент для скролу наверх */}
+              <div className="min-h-screen flex flex-col">
+                <Header />
+                <main className="flex-grow">
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/catalog" element={<Catalog />} />
+                    <Route path="/catalog/:category" element={<Catalog />} />
+                    <Route path="/product/:id" element={<ProductDetail />} />
+                    <Route path="/cart" element={<Cart />} />
+                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/auth" element={<Auth />} />
+                    <Route path="/favorites" element={<Favorites />} />
+                    <Route path="/admin" element={<Admin />} />
+                    {/* Додаткові маршрути */}
+                    <Route path="/novelty" element={<Catalog />} />
+                    <Route path="/discounts" element={<Catalog />} />
+                    <Route path="/hits" element={<Catalog />} />
+                  </Routes>
+                </main>
+                <Footer />
+              </div>
+            </ToastProvider>
+          </CartProvider>
+        </AuthProvider>
+      </Router>
   );
 }
 

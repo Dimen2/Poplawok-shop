@@ -1045,6 +1045,7 @@ body, html {
   flex-direction: column;
 }
 
+
 @media (max-width: 768px) {
   .catalog-product-card .product-info {
     padding: 12px;
