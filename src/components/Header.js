@@ -121,7 +121,7 @@ const Header = () => {
               {isSticky && (
                   <nav className="sticky-nav desktop-only">
                     <NavLink to="/catalog" className="sticky-nav-link">Каталог товарів</NavLink>
-                    <NavLink to="/novelty" className="sticky-nav-link">Новинки</NavLink>
+                    <NavLink to="/about" className="sticky-nav-link" onClick={closeMenu}> <span>Про нас</span> </NavLink>
                     <NavLink to="/discounts" className="sticky-nav-link">Знижки</NavLink>
                     <NavLink to="/hits" className="sticky-nav-link">Хіт продажів</NavLink>
                     <NavLink to="/brands" className="sticky-nav-link">Бренди</NavLink>
@@ -172,7 +172,9 @@ const Header = () => {
           <nav className={`header-nav desktop-only ${isSticky ? 'hidden' : ''}`}>
             <div className="nav-links">
               <NavLink to="/catalog" className="nav-link" data-testid="nav-catalog">Каталог товарів</NavLink>
-              <NavLink to="/novelty" className="nav-link" data-testid="nav-novelty">Новинки</NavLink>
+              <NavLink to="/about" className="nav-link" onClick={closeMenu}>
+                <span>Про нас</span>
+              </NavLink>
               <NavLink to="/discounts" className="nav-link" data-testid="nav-discounts">Знижки</NavLink>
               <NavLink to="/hits" className="nav-link" data-testid="nav-hits">Хіт продажів</NavLink>
               <NavLink to="/brands" className="nav-link" data-testid="nav-brands">Бренди</NavLink>
@@ -199,9 +201,7 @@ const Header = () => {
               <LayoutGrid size={20} />
               <span>Каталог товарів</span>
             </NavLink>
-            <NavLink to="/novelty" className="mobile-side-menu-item" onClick={closeMenu}>
-              <span>Новинки</span>
-            </NavLink>
+            <NavLink to="/about" className="mobile-side-menu-item" onClick={closeMenu}> <span>Про нас</span> </NavLink>
             <NavLink to="/discounts" className="mobile-side-menu-item" onClick={closeMenu}>
               <span>Знижки</span>
             </NavLink>

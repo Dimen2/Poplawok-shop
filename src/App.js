@@ -11,10 +11,11 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Auth from './pages/Auth';
 import Favorites from './pages/Favorites';
-import { ToastProvider } from './hooks/use-toast';
-import './App.css';
 import Admin from './pages/Admin';
-import ScrollToTop from './components/ScrollToTop'; // Імпортуємо компонент
+import AboutUs from './pages/AboutUs'; // ДОДАЙТЕ ЦЕЙ ІМПОРТ
+import { ToastProvider } from './hooks/use-toast';
+import ScrollToTop from './components/ScrollToTop';
+import './App.css';
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
         <AuthProvider>
           <CartProvider>
             <ToastProvider>
-              <ScrollToTop /> {/* Додаємо компонент для скролу наверх */}
+              <ScrollToTop />
               <div className="min-h-screen flex flex-col">
                 <Header />
                 <main className="flex-grow">
@@ -36,7 +37,7 @@ function App() {
                     <Route path="/auth" element={<Auth />} />
                     <Route path="/favorites" element={<Favorites />} />
                     <Route path="/admin" element={<Admin />} />
-                    {/* Додаткові маршрути */}
+                    <Route path="/about" element={<AboutUs />} /> {/* ДОДАЙТЕ ЦЕЙ РЯДОК */}
                     <Route path="/novelty" element={<Catalog />} />
                     <Route path="/discounts" element={<Catalog />} />
                     <Route path="/hits" element={<Catalog />} />

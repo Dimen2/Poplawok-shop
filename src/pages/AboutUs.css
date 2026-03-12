@@ -1,0 +1,553 @@
+/* AboutUs.css - всі стилі з префіксом about- */
+
+.about-us-page {
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+    color: #1a1a2e;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Hero Section */
+.about-hero-section {
+    position: relative;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #264E72 0%, #1a365d 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    overflow: hidden;
+}
+
+.about-hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://images.unsplash.com/photo-1605750416507-734370f71920?w=1920&h=1080&fit=crop');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.2;
+}
+
+.about-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(38, 78, 114, 0.9) 0%, rgba(26, 54, 93, 0.95) 100%);
+}
+
+.about-hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.about-hero-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 60px;
+    line-height: 1.3;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    animation: about-fadeInUp 1s ease-out;
+}
+
+@keyframes about-fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.about-stats-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.about-stat-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    padding: 40px 50px;
+    text-align: center;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: about-fadeInUp 1s ease-out;
+    animation-fill-mode: both;
+}
+
+.about-stat-card:nth-child(1) { animation-delay: 0.2s; }
+.about-stat-card:nth-child(2) { animation-delay: 0.4s; }
+
+.about-stat-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 60px rgba(11, 139, 255, 0.3);
+}
+
+.about-stat-number {
+    font-size: 4.5rem;
+    font-weight: 800;
+    color: #0B8BFF;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.about-stat-label {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.about-stat-sublabel {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 200px;
+}
+
+.about-stat-icon {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    width: 32px;
+    height: 32px;
+    color: #0B8BFF;
+    opacity: 0.6;
+}
+
+/* Community Section */
+.about-community-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 80vh;
+}
+
+.about-community-image {
+    position: relative;
+    overflow: hidden;
+}
+
+.about-community-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.about-community-image:hover img {
+    transform: scale(1.05);
+}
+
+.about-community-content {
+    background: #E8F4FF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px;
+    position: relative;
+}
+
+.about-community-content h2 {
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 700;
+    color: #264E72;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.about-community-icon {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    width: 48px;
+    height: 48px;
+    color: #0B8BFF;
+    opacity: 0.3;
+}
+
+/* Mission Section */
+.about-mission-section {
+    padding: 100px 20px;
+    background: #ffffff;
+}
+
+.about-mission-card {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.about-mission-image {
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(38, 78, 114, 0.15);
+}
+
+.about-mission-image img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.about-mission-image:hover img {
+    transform: scale(1.03);
+}
+
+.about-mission-content h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0B8BFF;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+}
+
+.about-mission-content p {
+    font-size: 1.15rem;
+    color: #1a1a2e;
+    line-height: 1.8;
+}
+
+/* Vision Section */
+.about-vision-section {
+    padding: 100px 20px;
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+}
+
+.about-vision-header {
+    max-width: 900px;
+    margin: 0 auto 60px;
+    text-align: center;
+}
+
+.about-vision-header h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0B8BFF;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+}
+
+.about-vision-header p {
+    font-size: 1.15rem;
+    color: #6b7280;
+    line-height: 1.8;
+}
+
+.about-vision-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.about-vision-card {
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(38, 78, 114, 0.08);
+    transition: all 0.4s ease;
+}
+
+.about-vision-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 60px rgba(11, 139, 255, 0.15);
+}
+
+.about-vision-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.about-vision-card p {
+    padding: 25px;
+    font-size: 0.95rem;
+    color: #6b7280;
+    line-height: 1.7;
+}
+
+/* Offer Section */
+.about-offer-section {
+    padding: 100px 20px;
+    background: #ffffff;
+}
+
+.about-offer-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 60px;
+}
+
+.about-offer-header h2 {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: #264E72;
+    margin-bottom: 20px;
+}
+
+.about-offer-header p {
+    font-size: 1.1rem;
+    color: #6b7280;
+}
+
+.about-offer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.about-offer-card {
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(38, 78, 114, 0.08);
+    transition: all 0.4s ease;
+    border: 1px solid rgba(38, 78, 114, 0.05);
+}
+
+.about-offer-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 50px rgba(11, 139, 255, 0.12);
+}
+
+.about-offer-image img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.about-offer-content {
+    padding: 25px;
+    text-align: center;
+}
+
+.about-offer-icon {
+    width: 36px;
+    height: 36px;
+    color: #0B8BFF;
+    margin-bottom: 15px;
+}
+
+.about-offer-content h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #264E72;
+    margin-bottom: 10px;
+}
+
+.about-offer-content p {
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+.about-offer-footer {
+    text-align: center;
+    max-width: 800px;
+    margin: 50px auto 0;
+    font-size: 1.05rem;
+    color: #1a1a2e;
+    font-weight: 500;
+}
+
+/* CTA Section */
+.about-cta-section {
+    padding: 120px 20px;
+    background: linear-gradient(135deg, #264E72 0%, #1a365d 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.about-cta-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(11, 139, 255, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.about-cta-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.about-cta-text {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 30px;
+    line-height: 1.8;
+}
+
+.about-cta-brand {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.about-cta-subtext {
+    font-size: 1.1rem;
+    color: #0B8BFF;
+    font-weight: 500;
+}
+
+
+
+.about-subscribe-form {
+    display: flex;
+    gap: 15px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.about-subscribe-form input {
+    flex: 1;
+    padding: 16px 24px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.about-subscribe-form input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.about-subscribe-form input:focus {
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 2px #0B8BFF;
+}
+
+.about-subscribe-form button {
+    padding: 16px 32px;
+    background: #0B8BFF;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.about-subscribe-form button:hover {
+    background: #0077e6;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(11, 139, 255, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .about-offer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .about-community-section {
+        grid-template-columns: 1fr;
+    }
+
+    .about-community-image {
+        height: 400px;
+    }
+
+    .about-mission-card {
+        grid-template-columns: 1fr;
+    }
+
+    .about-mission-image img {
+        height: 350px;
+    }
+
+    .about-vision-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-hero-section {
+        min-height: auto;
+        padding: 80px 20px;
+    }
+
+    .about-stats-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .about-stat-card {
+        width: 100%;
+        max-width: 320px;
+        padding: 30px;
+    }
+
+    .about-stat-number {
+        font-size: 3.5rem;
+    }
+
+    .about-community-content {
+        padding: 40px 20px;
+    }
+
+    .about-offer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-subscribe-form {
+        flex-direction: column;
+    }
+
+    .about-subscribe-form button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-hero-title {
+        font-size: 1.6rem;
+    }
+
+    .about-stat-number {
+        font-size: 3rem;
+    }
+
+    .about-cta-brand {
+        font-size: 1.5rem;
+    }
+}
