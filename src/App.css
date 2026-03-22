@@ -1643,3 +1643,106 @@ body, html {
   /* Тільки додаємо свайп */
 }
 
+/* Контейнер для плавающих кнопок */
+.floating-actions {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+/* Общий стиль круглых кнопок */
+.main-chat-btn, .scroll-up-btn, .chat-option {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+
+/* Кнопка чата */
+.main-chat-btn {
+  background: white;
+  color: #007bff;
+  border: 2px solid #eef2f7;
+  z-index: 10;
+}
+
+/* Кнопка Вверх */
+.scroll-up-btn {
+  background: white;
+  color: #007bff;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+}
+
+.scroll-up-btn.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Меню дополнительных кнопок (Вайбер, ТГ) */
+.chat-menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chat-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.chat-menu-container.open .chat-options {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+/* Цвета мессенджеров */
+.chat-option.viber { background: #7360f2; color: white; }
+.chat-option.telegram { background: #24A1DE; color: white; }
+.chat-option.call { background: white; color: #007bff; border: 1px solid #ddd; }
+
+/* Ховер эффекты */
+.main-chat-btn:hover, .scroll-up-btn:hover {
+  transform: scale(1.1);
+}
+
+/* --- АДАПТИВНОСТЬ ДЛЯ ТЕЛЕФОНА --- */
+@media (max-width: 768px) {
+  .floating-actions {
+    right: 20px;
+    bottom: 20px;
+    width: calc(100% - 40px);
+    flex-direction: row;
+    justify-content: space-between;
+    pointer-events: none; /* Чтобы контейнер не перекрывал экран */
+  }
+
+  .chat-menu-container, .scroll-up-btn {
+    pointer-events: all;
+  }
+
+  /* На мобилках чат слева, кнопка вверх справа */
+  .chat-menu-container {
+    order: -1;
+  }
+}

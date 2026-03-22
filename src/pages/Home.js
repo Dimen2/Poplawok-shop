@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ShoppingCart, Heart, ChevronLeft, ChevronRight, Youtube } from 'lucide-react';
+import {
+    ArrowRight, ShoppingCart, Heart, ChevronLeft, ChevronRight,
+    Youtube, MessageCircle, Phone, X, ChevronUp
+} from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { banners, products, fishTypes, categories } from './mockData';
 
-// Импорт верхней шапки
+// Импорты фото (оставляем как были)
 import photo from "./Photos/Chat.png";
 import header2 from './Photos/header2.png';
 import header3 from './Photos/header3.png';
-
-// Фото товаров и рыб
 import photo2 from "./Photos/Fider.jpg";
 import photo3 from "./Photos/Fish.jpg";
 import photo4 from "./Photos/Hook.jpg";
@@ -21,14 +22,11 @@ import photo11 from "./Photos/Feeder.jpg";
 import photo12 from "./Photos/Bag.jpg";
 import photo13 from "./Photos/Bait.jpg";
 import photo15 from "./Photos/Half.jpg";
-
 import photo7 from "./Photos/Koras.jpg";
 import photo10 from "./Photos/Skuka.jpg";
 import photo14 from "./Photos/Korop.jpg";
 import photo16 from "./Photos/Okun.jpg";
 import photo17 from "./Photos/Sudak.jpg";
-
-// Спонсоры
 import bounty from "./Photos/bounty.png";
 import brain from "./Photos/brain.png";
 import carppro from "./Photos/carp-pro.png";
@@ -38,8 +36,23 @@ import spinnex from "./Photos/spinnex.png";
 
 function Home() {
     const { addToCart, toggleFavorite, isFavorite } = useCart();
+    const [isChatOpen, setIsChatOpen] = useState(false);
+    const [showScrollUp, setShowScrollUp] = useState(false);
 
-    // --- КАРУСЕЛЬ ДЛЯ ВЕРХНЬОГО БАНЕРА ---
+    // Логика появления кнопки "Вверх" при скролле
+    useEffect(() => {
+        const handleScroll = () => {
+            setShowScrollUp(window.scrollY > 300);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // --- КАРУСЕЛЬ БАНЕРА ---
     const bannerImages = [photo, header2, header3];
     const [bannerIndex, setBannerIndex] = useState(0);
     const bannerIntervalRef = useRef(null);
@@ -58,23 +71,15 @@ function Home() {
     const handleBannerPrev = () => setBannerIndex((prev) => (prev - 1 + bannerImages.length) % bannerImages.length);
     const goToBanner = (index) => setBannerIndex(index);
 
-    // --- ЛОГИКА КАРУСЕЛИ НОВИНОК (ОБНОВЛЕНО) ---
-    // Берем все товары с пометкой isNew
+    // --- ЛОГИКА КАРУСЕЛИ НОВИНОК ---
     const noveltyProducts = products.filter(p => p.isNew);
-
-    // Создаем расширенный список фото для разнообразия
     const productImages = [photo11, photo12, photo13, photo14, photo15, photo16, photo17, photo2, photo3, photo4, photo5];
-
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isTransitioning, setIsTransitioning] = useState(true);
-
-    // Для бесконечного эффекта клонируем первые 4 элемента в конец
     const displayProducts = [...noveltyProducts, ...noveltyProducts.slice(0, 4)];
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            handleNext();
-        }, 4000);
+        const interval = setInterval(() => { handleNext(); }, 4000);
         return () => clearInterval(interval);
     }, [currentIndex]);
 
@@ -103,7 +108,6 @@ function Home() {
         }
     }, [currentIndex, noveltyProducts.length]);
 
-    // Хіти та Знижки
     const hitProducts = products.filter(p => p.isHit).slice(0, 4);
     const discountProducts = products.filter(p => p.discount).slice(0, 4);
     const sponsors = [bounty, brain, carppro, corona, fishingRoi, spinnex];
@@ -145,7 +149,6 @@ function Home() {
 
                     <div className="carousel-main-container" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
                         <button onClick={handlePrev} className="side-nav-btn left desktop-only"><ChevronLeft size={28} /></button>
-
                         <div style={{ width: '100%', overflow: 'hidden' }}>
                             <div style={{
                                 display: 'flex',
@@ -155,7 +158,6 @@ function Home() {
                             }}>
                                 {displayProducts.map((product, index) => {
                                     const isFav = isFavorite(product.id);
-                                    // Используем расширенный массив фото, чтобы они не повторялись
                                     const productImage = productImages[index % productImages.length];
                                     return (
                                         <div key={`${product.id}-${index}`} className="carousel-item">
@@ -189,13 +191,12 @@ function Home() {
                                 })}
                             </div>
                         </div>
-
                         <button onClick={handleNext} className="side-nav-btn right desktop-only"><ChevronRight size={28} /></button>
                     </div>
                 </div>
             </section>
 
-            {/* Риби — Зроблено 5 в ряд, прибрано 3 останні */}
+            {/* Риби */}
             <section className="fish-section">
                 <div className="page-container">
                     <div className="section-header">
@@ -260,7 +261,7 @@ function Home() {
             {/* Категорії */}
             <section className="categories-section">
                 <div className="page-container">
-                    <h2 className="section-title text-center" style={{ marginBottom: '40px' }}>Популярні категорії</h2>
+                    <h2 className="section-title text-center" style={{ marginBottom: '40px' }}>Популярні категории</h2>
                     <div className="categories-grid">
                         {categories.map((cat) => (
                             <Link key={cat.id} to={`/catalog/${cat.slug}`} className="category-card">
@@ -319,6 +320,35 @@ function Home() {
                     </div>
                 </div>
             </section>
+
+            {/* ПЛАВАЮЩИЕ КНОПКИ */}
+            <div className="floating-actions">
+                {/* Меню чатов */}
+                <div className={`chat-menu-container ${isChatOpen ? 'open' : ''}`}>
+                    <div className="chat-options">
+                        <a href="viber://chat?number=+380000000000" className="chat-option viber" title="Viber">
+                            <Phone size={24} fill="white" />
+                        </a>
+                        <a href="https://t.me/CodeBox12_bot" target="_blank" rel="noreferrer" className="chat-option telegram" title="Telegram">
+                            <ArrowRight size={24} style={{ transform: 'rotate(-45deg)' }} />
+                        </a>
+                        <a href="tel:+380000000000" className="chat-option call" title="Позвонить">
+                            <Phone size={24} />
+                        </a>
+                    </div>
+                    <button className="main-chat-btn" onClick={() => setIsChatOpen(!isChatOpen)}>
+                        {isChatOpen ? <X size={28} /> : <MessageCircle size={28} />}
+                    </button>
+                </div>
+
+                {/* Кнопка вверх */}
+                <button
+                    className={`scroll-up-btn ${showScrollUp ? 'visible' : ''}`}
+                    onClick={scrollToTop}
+                >
+                    <ChevronUp size={30} />
+                </button>
+            </div>
         </div>
     );
 }
