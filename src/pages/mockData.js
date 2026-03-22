@@ -14,11 +14,26 @@ import Lugha10g from "./Photos/lugha-10g.jpg";
 import Lugha50g from "./Photos/lugha-50g.jpg";
 import Chat from "./Photos/Chat.png";
 import Fider from "./Photos/Fider.jpg";
+import Fider2 from "./Photos/Fider2.jpg";
+import Fider3 from "./Photos/Fider3.jpg";
 import Fish from "./Photos/Fish.jpg";
 import Hook from "./Photos/Hook.jpg";
 import Coil from "./Photos/Coil.jpg";
+import Coil2 from "./Photos/Coil2.jpg";
+import Coil3 from "./Photos/Coil3.jpg";
 import Umbrella from "./Photos/Umbrella.jpg";
 import Wobbler from "./Photos/Wobbler.jpg";
+
+//Вот Ещё НОВЫЕ
+import Bag from "./Photos/Bag.jpg";
+import Bait from "./Photos/Bait.jpg";
+import BlackFire from "./Photos/BlackFire.jpg";
+import Feeder from "./Photos/Feeder.jpg";
+import Half from "./Photos/Half.jpg";
+import Kenshin from "./Photos/Kenshin.jpg";
+import Lure from "./Photos/Lure.jpg";
+import Vest from "./Photos/Vest.jpg";
+
 
 export const categories = [
   {
@@ -48,28 +63,33 @@ export const categories = [
     slug: 'feeder-rods',
     image: Fider,
     subcategories: [
-      { id: 201, name: 'Вершинки', slug: 'Вершинки', image: Fider },
-      { id: 202, name: 'Фідерні вудилища', slug: 'Фідерні вудилища', image: Fider },
-      { id: 202, name: 'Матчеві вудилища', slug: 'Матчеві вудилища', image: Fider }
+      { id: 301, name: 'Коропові вудилища', slug: 'fider', image: Fider },
+      { id: 302, name: 'Фідерні вудилища', slug: 'fider2', image: Fider2 },
+      { id: 303, name: 'Матчеві вудилища', slug: 'fider3', image: Fider3 }
     ]
   },
   {
     id: 4,
-    name: 'Фідерні котушки',
+    name: 'Котушки',
     slug: 'feeder-reels',
     image: Coil,
-    subcategories: []
+    subcategories: [
+      { id: 401, name: 'Спінінгові котушки', slug: 'coil', image: Coil },
+      { id: 402, name: 'Фідерні котушки', slug: 'coil2', image: Coil2 },
+      { id: 403, name: 'Коропові котушки', slug: 'coil3', image: Coil3 }
+
+    ]
   },
   {
     id: 5,
-    name: 'Коропові вудилища',
+    name: '',
     slug: 'carp-rods',
     image: Fider,
     subcategories: []
   },
   {
     id: 6,
-    name: 'Коропові котушки',
+    name: '',
     slug: 'carp-reels',
     image: Coil,
     subcategories: []
@@ -367,7 +387,7 @@ export const products = [
     oldPrice: null,
     image: Coil,
     category: 'feeder-reels',
-    subcategory: null,
+    subcategory: 'coil',
     isNew: true,
     isHit: true,
     discount: null,
@@ -387,9 +407,31 @@ export const products = [
     name: 'Котушка Shimano Nexave 4000',
     price: 3200,
     oldPrice: 3800,
-    image: Coil,
+    image: 'Coil3',
     category: 'feeder-reels',
-    subcategory: null,
+    subcategory: 'coil3',
+    isNew: false,
+    isHit: true,
+    discount: 16,
+    description: 'Потужна котушка для фідерної риболовлі.',
+    specifications: {
+      bearings: '8+1',
+      gear_ratio: '5.0:1',
+      weight: '310г',
+      line_capacity: '0.25мм/200м'
+    },
+    inStock: true,
+    rating: 4.7,
+    reviews: 31
+  },
+  {
+    id: 23,
+    name: 'Котушка Shimano Nexave 4000',
+    price: 3200,
+    oldPrice: 3800,
+    image: 'Coil2',
+    category: 'feeder-reels',
+    subcategory: 'coil2',
     isNew: false,
     isHit: true,
     discount: 16,
@@ -593,11 +635,57 @@ export const products = [
   {
     id: 21,
     name: 'Коропове вудлище Korda Kaizen Green 12ft',
-    price: 7506,
+    price: 2000,
     oldPrice: null,
     image: Fider,
-    category: 'carp-rods',
-    subcategory: null,
+    category: 'feeder-rods',
+    subcategory: 'fider',
+    isNew: true,
+    isHit: false,
+    discount: null,
+    description: 'Преміум коропове вудлище з чутливим бланком для далекого забросу.',
+    specifications: {
+      length: '12ft (3.66м)',
+      test: '3.5lb',
+      sections: '2',
+      weight: '385г'
+    },
+    inStock: true,
+    rating: 4.9,
+    reviews: 31
+  },
+
+  {
+    id: 22,
+    name: 'Матчеве телескопічне вудлище ',
+    price: 1117,
+    oldPrice: null,
+    image: Fider3,
+    category: 'feeder-rods',
+    subcategory: 'fider3',
+    isNew: true,
+    isHit: false,
+    discount: null,
+    description: 'Преміум коропове вудлище з чутливим бланком для далекого забросу.',
+    specifications: {
+      length: '12ft (3.66м)',
+      test: '3.5lb',
+      sections: '2',
+      weight: '385г'
+    },
+    inStock: true,
+    rating: 4.9,
+    reviews: 31
+  },
+
+  {
+    id: 24,
+    name: 'Матчеве телескопічне вудлище ',
+    price: 1117,
+    oldPrice: null,
+    image: Fider2,
+    category: 'feeder-rods',
+    subcategory: 'fider2',
     isNew: true,
     isHit: false,
     discount: null,

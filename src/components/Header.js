@@ -211,7 +211,6 @@ const Header = () => {
             <NavLink to="/brands" className="mobile-side-menu-item" onClick={closeMenu}>
               <span>Бренди</span>
             </NavLink>
-
             <div className="menu-divider"></div>
 
             <NavLink to={user ? "/profile" : "/auth"} className="mobile-side-menu-item" onClick={closeMenu}>

@@ -28,6 +28,7 @@ import Lestka2 from "./Photos/Lestka-300m.jpg";
 import Lugha100g from "./Photos/lugha-100g.jpg";
 import Lugha10g from "./Photos/lugha-10g.jpg";
 import Lugha50g from "./Photos/lugha-50g.jpg";
+import Fider from "./Photos/Fider.jpg";
 
 const Catalog = () => {
   const [searchParams] = useSearchParams();
@@ -52,7 +53,7 @@ const Catalog = () => {
   const productsPerPage = 12;
 
   // Массив всех фотографий
-const allPhotos = [photo1, photo2, photo3, photo4, photo5, photo6, photo7, Lestka1, Lestka2, Lugha100g, Lugha10g, Lugha50g];
+const allPhotos = [photo1, photo2, photo3, photo4, photo5, photo6, photo7, Lestka1, Lestka2, Lugha100g, Lugha10g, Lugha50g, Fider];
 
   // Функция для получения фото
   const getProductImage = (productId) => {

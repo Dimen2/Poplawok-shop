@@ -414,78 +414,110 @@
   }
 }
 
-/* ========== СЕКЦІЯ РИБ ========== */
+/* ========== СЕКЦІЯ РИБ (STYLISH) ========== */
 .fish-section {
-  background: linear-gradient(to bottom, #eff6ff, white);
+  background: #f0f7ff; /* Светло-голубой фон всей секции */
   padding: 60px 0;
-  position: relative;
-  overflow: hidden;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.view-all-link {
+  text-decoration: none;
+  color: #2563eb;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: opacity 0.2s;
 }
 
 .fish-grid {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 16px;
-  position: relative;
-  z-index: 1;
-}
-
-@media (max-width: 1024px) {
-  .fish-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .fish-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
 }
 
 .fish-card {
-  background-color: white;
+  background: white;
   border-radius: 12px;
-  padding: 16px;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s;
+  height: 160px; /* Фиксированная высота для аккуратности */
+  display: flex;
+  position: relative;
   text-decoration: none;
-  color: inherit;
+  overflow: hidden; /* Чтобы рыба не вылезала за скругление */
+  border: 1px solid #e2e8f0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .fish-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.1);
+}
+
+.fish-card-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 2; /* Текст и кнопка поверх рыбы */
+  width: 100%;
+}
+
+.fish-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin: 0;
+}
+
+.fish-button {
+  width: 36px;
+  height: 36px;
+  background: #2563eb;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.fish-card:hover .fish-button {
+  background: #1d4ed8;
+}
+
+.fish-image-wrapper {
+  position: absolute;
+  right: -10px; /* Смещение вправо */
+  bottom: 10px;
+  width: 70%; /* Размер изображения относительно карточки */
+  height: 80%;
+  pointer-events: none;
 }
 
 .fish-image {
   width: 100%;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 12px;
+  height: 100%;
+  object-fit: contain; /* Чтобы рыба не обрезалась, а вписывалась */
+}
+
+
+/* Адаптив */
+@media (max-width: 1200px) {
+  .fish-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 768px) {
-  .fish-card {
-    padding: 10px;
-  }
-
-  .fish-image {
-    height: 60px;
-  }
-
-  .fish-name {
-    font-size: 12px;
-  }
+  .fish-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .fish-card { height: 140px; }
+  .fish-name { font-size: 16px; }
 }
 
-.fish-name {
-  font-weight: 500;
-  color: #374151;
-  font-size: 14px;
-}
 
 /* ========== СЕКЦІЯ КАТЕГОРІЙ ========== */
 .categories-section {

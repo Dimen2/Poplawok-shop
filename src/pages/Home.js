@@ -4,26 +4,29 @@ import { ArrowRight, ShoppingCart, Heart, ChevronLeft, ChevronRight, Youtube } f
 import { useCart } from '../context/CartContext';
 import { banners, products, fishTypes, categories } from './mockData';
 
-// Импорт верхней шапки (банерів) - ВИПРАВЛЕНО НАЗВИ
+// Импорт верхней шапки
 import photo from "./Photos/Chat.png";
-import header2 from './Photos/header2.png'; // маленька літера h
-import header3 from './Photos/header3.png'; // маленька літера h
+import header2 from './Photos/header2.png';
+import header3 from './Photos/header3.png';
 
-// Інші фото
+// Фото товаров и рыб
 import photo2 from "./Photos/Fider.jpg";
 import photo3 from "./Photos/Fish.jpg";
 import photo4 from "./Photos/Hook.jpg";
 import photo5 from "./Photos/Coil.jpg";
 import photo6 from "./Photos/Umbrella.jpg";
-import photo7 from "./Photos/Wobbler.jpg";
-import photo8 from "./Photos/Fider.jpg";
-import photo9 from "./Photos/Hook.jpg";
-import photo10 from "./Photos/Umbrella.jpg";
-import photo11 from "./Photos/Coil.jpg";
-import photo12 from "./Photos/Fider.jpg";
-import photo13 from "./Photos/Fish.jpg";
-import photo14 from "./Photos/Coil.jpg";
-import photo15 from "./Photos/Wobbler.jpg";
+import photo8 from "./Photos/Lure.jpg";
+import photo9 from "./Photos/BlackFire.jpg";
+import photo11 from "./Photos/Feeder.jpg";
+import photo12 from "./Photos/Bag.jpg";
+import photo13 from "./Photos/Bait.jpg";
+import photo15 from "./Photos/Half.jpg";
+
+import photo7 from "./Photos/Koras.jpg";
+import photo10 from "./Photos/Skuka.jpg";
+import photo14 from "./Photos/Korop.jpg";
+import photo16 from "./Photos/Okun.jpg";
+import photo17 from "./Photos/Sudak.jpg";
 
 // Спонсоры
 import bounty from "./Photos/bounty.png";
@@ -41,47 +44,37 @@ function Home() {
     const [bannerIndex, setBannerIndex] = useState(0);
     const bannerIntervalRef = useRef(null);
 
-    // Автоматичне перемикання кожні 7 секунд
     useEffect(() => {
         startBannerInterval();
         return () => clearInterval(bannerIntervalRef.current);
     }, []);
 
     const startBannerInterval = () => {
-        if (bannerIntervalRef.current) {
-            clearInterval(bannerIntervalRef.current);
-        }
-        bannerIntervalRef.current = setInterval(() => {
-            handleBannerNext();
-        }, 7000);
+        if (bannerIntervalRef.current) clearInterval(bannerIntervalRef.current);
+        bannerIntervalRef.current = setInterval(handleBannerNext, 7000);
     };
 
-    const handleBannerNext = () => {
-        setBannerIndex((prev) => (prev + 1) % bannerImages.length);
-        startBannerInterval();
-    };
+    const handleBannerNext = () => setBannerIndex((prev) => (prev + 1) % bannerImages.length);
+    const handleBannerPrev = () => setBannerIndex((prev) => (prev - 1 + bannerImages.length) % bannerImages.length);
+    const goToBanner = (index) => setBannerIndex(index);
 
-    const handleBannerPrev = () => {
-        setBannerIndex((prev) => (prev - 1 + bannerImages.length) % bannerImages.length);
-        startBannerInterval();
-    };
-
-    const goToBanner = (index) => {
-        setBannerIndex(index);
-        startBannerInterval();
-    };
-
-    // --- ЛОГИКА ПЛАВНОЙ КАРУСЕЛИ ДЛЯ НОВИНОК ---
+    // --- ЛОГИКА КАРУСЕЛИ НОВИНОК (ОБНОВЛЕНО) ---
+    // Берем все товары с пометкой isNew
     const noveltyProducts = products.filter(p => p.isNew);
+
+    // Создаем расширенный список фото для разнообразия
+    const productImages = [photo11, photo12, photo13, photo14, photo15, photo16, photo17, photo2, photo3, photo4, photo5];
+
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isTransitioning, setIsTransitioning] = useState(true);
 
+    // Для бесконечного эффекта клонируем первые 4 элемента в конец
     const displayProducts = [...noveltyProducts, ...noveltyProducts.slice(0, 4)];
 
     useEffect(() => {
         const interval = setInterval(() => {
             handleNext();
-        }, 3000);
+        }, 4000);
         return () => clearInterval(interval);
     }, [currentIndex]);
 
@@ -110,73 +103,35 @@ function Home() {
         }
     }, [currentIndex, noveltyProducts.length]);
 
+    // Хіти та Знижки
     const hitProducts = products.filter(p => p.isHit).slice(0, 4);
     const discountProducts = products.filter(p => p.discount).slice(0, 4);
-
-    // Массив логотипов (повторяем, чтобы лента была длиннее)
     const sponsors = [bounty, brain, carppro, corona, fishingRoi, spinnex];
 
     return (
-        <div>
-            <div className="home-page">
-                {/* Головний банер з каруселлю */}
-                <div className="hero-section">
-                    <div className="hero-banner">
-                        {/* Стрілки для банеру */}
-                        <button
-                            className="banner-arrow banner-arrow-left"
-                            onClick={handleBannerPrev}
-                            aria-label="Попередній банер"
-                        >
-                            <ChevronLeft size={30} />
-                        </button>
-
-                        <button
-                            className="banner-arrow banner-arrow-right"
-                            onClick={handleBannerNext}
-                            aria-label="Наступний банер"
-                        >
-                            <ChevronRight size={30} />
-                        </button>
-
-                        {/* Зображення банеру */}
-                        <div className="banner-images">
-                            {bannerImages.map((img, idx) => (
-                                <img
-                                    key={idx}
-                                    src={img}
-                                    alt={`Банер ${idx + 1}`}
-                                    className={`banner-image ${idx === bannerIndex ? 'active' : ''}`}
-                                />
-                            ))}
-                        </div>
-
-                        {/* Індикатори (точки) */}
-                        <div className="banner-dots">
-                            {bannerImages.map((_, idx) => (
-                                <button
-                                    key={idx}
-                                    className={`banner-dot ${idx === bannerIndex ? 'active' : ''}`}
-                                    onClick={() => goToBanner(idx)}
-                                    aria-label={`Перейти до банеру ${idx + 1}`}
-                                />
-                            ))}
-                        </div>
-
-                        {/* YouTube кнопка */}
-                        <div className="hero-content">
-                            <a
-                                href="https://www.youtube.com/@Poplavok_"
-                                className="youtube-link"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <Youtube size={70} />
-                            </a>
-                        </div>
+        <div className="home-page">
+            {/* Головний банер */}
+            <section className="hero-section">
+                <div className="hero-banner">
+                    <button className="banner-arrow banner-arrow-left" onClick={handleBannerPrev}><ChevronLeft size={30} /></button>
+                    <button className="banner-arrow banner-arrow-right" onClick={handleBannerNext}><ChevronRight size={30} /></button>
+                    <div className="banner-images">
+                        {bannerImages.map((img, idx) => (
+                            <img key={idx} src={img} alt={`Banner ${idx}`} className={`banner-image ${idx === bannerIndex ? 'active' : ''}`} />
+                        ))}
+                    </div>
+                    <div className="banner-dots">
+                        {bannerImages.map((_, idx) => (
+                            <button key={idx} className={`banner-dot ${idx === bannerIndex ? 'active' : ''}`} onClick={() => goToBanner(idx)} />
+                        ))}
+                    </div>
+                    <div className="hero-content">
+                        <a href="https://www.youtube.com/@Poplavok_" className="youtube-link" target="_blank" rel="noopener noreferrer">
+                            <Youtube size={70} />
+                        </a>
                     </div>
                 </div>
-            </div>
+            </section>
 
             {/* Секция Новинки */}
             <section className="products-section" style={{ overflow: 'hidden' }}>
@@ -184,17 +139,12 @@ function Home() {
                     <div className="section-header">
                         <h2 className="section-title">Новинки</h2>
                         <Link to="/novelty">
-                            <button className="view-all-btn">
-                                Всі товари
-                                <ArrowRight size={16} />
-                            </button>
+                            <button className="view-all-btn">Всі товари <ArrowRight size={16} /></button>
                         </Link>
                     </div>
 
                     <div className="carousel-main-container" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-                        <button onClick={handlePrev} className="side-nav-btn left desktop-only">
-                            <ChevronLeft size={28} />
-                        </button>
+                        <button onClick={handlePrev} className="side-nav-btn left desktop-only"><ChevronLeft size={28} /></button>
 
                         <div style={{ width: '100%', overflow: 'hidden' }}>
                             <div style={{
@@ -205,7 +155,8 @@ function Home() {
                             }}>
                                 {displayProducts.map((product, index) => {
                                     const isFav = isFavorite(product.id);
-                                    const productImage = [photo2, photo3, photo4, photo5][index % 4] || photo2;
+                                    // Используем расширенный массив фото, чтобы они не повторялись
+                                    const productImage = productImages[index % productImages.length];
                                     return (
                                         <div key={`${product.id}-${index}`} className="carousel-item">
                                             <div className="product-card">
@@ -239,29 +190,30 @@ function Home() {
                             </div>
                         </div>
 
-                        <button onClick={handleNext} className="side-nav-btn right desktop-only">
-                            <ChevronRight size={28} />
-                        </button>
+                        <button onClick={handleNext} className="side-nav-btn right desktop-only"><ChevronRight size={28} /></button>
                     </div>
                 </div>
             </section>
 
-            {/* Риби */}
+            {/* Риби — Зроблено 5 в ряд, прибрано 3 останні */}
             <section className="fish-section">
                 <div className="page-container">
                     <div className="section-header">
                         <h2 className="section-title">Злови свій трофей</h2>
-                        <Link to="/fish-types">
-                            <button className="view-all-btn">Всі види риб <ArrowRight size={16} /></button>
-                        </Link>
+                        <Link to="/fish-types" className="view-all-link">Всі види риб <ArrowRight size={16} /></Link>
                     </div>
                     <div className="fish-grid">
-                        {fishTypes.map((fish, index) => {
-                            const fishImage = [photo6, photo7, photo8, photo9, photo10][index] || photo6;
+                        {fishTypes.slice(0, -3).map((fish, index) => {
+                            const fishImage = [photo10, photo14, photo7, photo16, photo17][index % 5];
                             return (
                                 <Link key={fish.id} to={`/fish/${fish.slug}`} className="fish-card">
-                                    <img src={fishImage} alt={fish.name} className="fish-image" />
-                                    <h3 className="fish-name">{fish.name}</h3>
+                                    <div className="fish-card-content">
+                                        <h3 className="fish-name">{fish.name}</h3>
+                                        <div className="fish-button"><ArrowRight size={20} color="white" /></div>
+                                    </div>
+                                    <div className="fish-image-wrapper">
+                                        <img src={fishImage} alt={fish.name} className="fish-image" />
+                                    </div>
                                 </Link>
                             );
                         })}
@@ -274,20 +226,16 @@ function Home() {
                 <div className="page-container">
                     <div className="section-header">
                         <h2 className="section-title">Знижки</h2>
-                        <Link to="/discounts">
-                            <button className="view-all-btn">Всі товари <ArrowRight size={16} /></button>
-                        </Link>
+                        <Link to="/discounts"><button className="view-all-btn">Всі товари <ArrowRight size={16} /></button></Link>
                     </div>
                     <div className="products-grid">
                         {discountProducts.map((product, index) => {
                             const isFav = isFavorite(product.id);
-                            const discountImage = [photo11, photo12, photo13, photo14][index] || photo11;
+                            const discountImg = [photo11, photo12, photo13, photo14][index];
                             return (
                                 <div key={product.id} className="product-card">
                                     <div className="product-image-container">
-                                        <Link to={`/product/${product.id}`}>
-                                            <img src={discountImage} alt={product.name} className="product-image" />
-                                        </Link>
+                                        <Link to={`/product/${product.id}`}><img src={discountImg} alt={product.name} className="product-image" /></Link>
                                         <button onClick={() => toggleFavorite(product)} className={`favorite-btn ${isFav ? 'active' : ''}`}>
                                             <Heart size={20} fill={isFav ? "currentColor" : "none"} />
                                         </button>
@@ -314,10 +262,10 @@ function Home() {
                 <div className="page-container">
                     <h2 className="section-title text-center" style={{ marginBottom: '40px' }}>Популярні категорії</h2>
                     <div className="categories-grid">
-                        {categories.map((category) => (
-                            <Link key={category.id} to={`/catalog/${category.slug}`} className="category-card">
-                                <img src={photo15} alt={category.name} className="category-image" />
-                                <div className="category-content"><h3 className="category-name">{category.name}</h3></div>
+                        {categories.map((cat) => (
+                            <Link key={cat.id} to={`/catalog/${cat.slug}`} className="category-card">
+                                <img src={photo3} alt={cat.name} className="category-image" />
+                                <div className="category-content"><h3 className="category-name">{cat.name}</h3></div>
                             </Link>
                         ))}
                     </div>
@@ -329,20 +277,16 @@ function Home() {
                 <div className="page-container">
                     <div className="section-header">
                         <h2 className="section-title">Хіт продажів</h2>
-                        <Link to="/hits">
-                            <button className="view-all-btn">Всі товари <ArrowRight size={16} /></button>
-                        </Link>
+                        <Link to="/hits"><button className="view-all-btn">Всі товари <ArrowRight size={16} /></button></Link>
                     </div>
                     <div className="products-grid">
                         {hitProducts.map((product, index) => {
                             const isFav = isFavorite(product.id);
-                            const hitImage = [photo2, photo3, photo4, photo5][index] || photo2;
+                            const hitImg = [photo2, photo3, photo4, photo5][index];
                             return (
                                 <div key={product.id} className="product-card">
                                     <div className="product-image-container">
-                                        <Link to={`/product/${product.id}`}>
-                                            <img src={hitImage} alt={product.name} className="product-image" />
-                                        </Link>
+                                        <Link to={`/product/${product.id}`}><img src={hitImg} alt={product.name} className="product-image" /></Link>
                                         <button onClick={() => toggleFavorite(product)} className={`favorite-btn ${isFav ? 'active' : ''}`}>
                                             <Heart size={20} fill={isFav ? "currentColor" : "none"} />
                                         </button>
@@ -361,12 +305,12 @@ function Home() {
                 </div>
             </section>
 
-            {/* КАРУСЕЛЬ СПОНСОРОВ */}
+            {/* Спонсори */}
             <section className="sponsors-carousel-section">
                 <div className="page-container">
                     <div className="sponsors-wrapper">
                         <div className="sponsors-track">
-                            {[...sponsors, ...sponsors].map((logo, idx) => (
+                            {[...sponsors, ...sponsors, ...sponsors].map((logo, idx) => (
                                 <div key={idx} className="sponsor-item">
                                     <img src={logo} alt="Partner" className="sponsor-img" />
                                 </div>
