@@ -15,7 +15,6 @@ import {
   ChevronUp
 } from 'lucide-react';
 
-// Импорт ваших фотографий
 import photo1 from "./Photos/Chat.png";
 import photo2 from "./Photos/Fider.jpg";
 import photo3 from "./Photos/Fish.jpg";

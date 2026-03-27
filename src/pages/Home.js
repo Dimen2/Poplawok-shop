@@ -329,7 +329,7 @@ function Home() {
                         <a href="viber://chat?number=+380000000000" className="chat-option viber" title="Viber">
                             <Phone size={24} fill="white" />
                         </a>
-                        <a href="https://t.me/CodeBox12_bot" target="_blank" rel="noreferrer" className="chat-option telegram" title="Telegram">
+                        <a href="https://t.me/poplavok1_bot" target="_blank" rel="noreferrer" className="chat-option telegram" title="Telegram">
                             <ArrowRight size={24} style={{ transform: 'rotate(-45deg)' }} />
                         </a>
                         <a href="tel:+380000000000" className="chat-option call" title="Позвонить">

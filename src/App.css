@@ -1721,6 +1721,7 @@ body, html {
 .chat-option.telegram { background: #24A1DE; color: white; }
 .chat-option.call { background: white; color: #007bff; border: 1px solid #ddd; }
 
+
 /* Ховер эффекты */
 .main-chat-btn:hover, .scroll-up-btn:hover {
   transform: scale(1.1);
@@ -1746,3 +1747,4 @@ body, html {
     order: -1;
   }
 }
+
