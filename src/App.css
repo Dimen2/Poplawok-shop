@@ -1652,13 +1652,13 @@ body, html {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  align-items: center;
+  align-items: flex-end; /* Вирівнювання по правому краю */
 }
 
 /* Общий стиль круглых кнопок */
 .main-chat-btn, .scroll-up-btn, .chat-option {
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1697,13 +1697,14 @@ body, html {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
 .chat-options {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 12px;
+  margin-bottom: 12px;
   opacity: 0;
   pointer-events: none;
   transform: translateY(20px);
@@ -1717,34 +1718,101 @@ body, html {
 }
 
 /* Цвета мессенджеров */
-.chat-option.viber { background: #7360f2; color: white; }
-.chat-option.telegram { background: #24A1DE; color: white; }
-.chat-option.call { background: white; color: #007bff; border: 1px solid #ddd; }
-
+.chat-option.viber {
+  background: #7360f2;
+  color: white;
+}
+.chat-option.telegram {
+  background: #24A1DE;
+  color: white;
+}
+.chat-option.call {
+  background: white;
+  color: #007bff;
+  border: 1px solid #ddd;
+}
 
 /* Ховер эффекты */
 .main-chat-btn:hover, .scroll-up-btn:hover {
   transform: scale(1.1);
 }
 
-/* --- АДАПТИВНОСТЬ ДЛЯ ТЕЛЕФОНА --- */
+/* --- АДАПТИВНІСТЬ ДЛЯ ТЕЛЕФОНА --- */
 @media (max-width: 768px) {
   .floating-actions {
-    right: 20px;
-    bottom: 20px;
-    width: calc(100% - 40px);
+    bottom: 90px; /* Відступ від нижньої панелі навігації */
+    left: 0;
+    right: 0;
     flex-direction: row;
     justify-content: space-between;
-    pointer-events: none; /* Чтобы контейнер не перекрывал экран */
+    align-items: center;
+    padding: 0 20px;
+    pointer-events: none;
   }
 
-  .chat-menu-container, .scroll-up-btn {
-    pointer-events: all;
-  }
-
-  /* На мобилках чат слева, кнопка вверх справа */
   .chat-menu-container {
-    order: -1;
+    pointer-events: all;
+    order: -1; /* Кнопка чата зліва */
+    align-items: flex-start; /* Вирівнювання по лівому краю */
+  }
+
+  .scroll-up-btn {
+    pointer-events: all;
+    order: 2; /* Кнопка вверх справа */
+  }
+
+  /* Меню чату на мобільних - відкривається вгору, а не вниз */
+  .chat-menu-container {
+    position: relative;
+  }
+
+  .chat-options {
+    position: absolute;
+    bottom: 70px; /* Піднімаємо вгору над кнопкою */
+    left: 0;
+    flex-direction: column;
+    margin-bottom: 0;
+    gap: 12px;
+    transform: translateY(20px);
+  }
+
+  .chat-menu-container.open .chat-options {
+    transform: translateY(0);
+  }
+
+  /* Кнопка вверх на мобільних - залишається справа на тій же висоті */
+  .scroll-up-btn {
+    margin-left: auto;
+  }
+
+  /* Зменшуємо кнопки на мобільних */
+  .main-chat-btn, .scroll-up-btn, .chat-option {
+    width: 48px;
+    height: 48px;
+  }
+
+  .chat-option svg,
+  .main-chat-btn svg,
+  .scroll-up-btn svg {
+    width: 22px;
+    height: 22px;
   }
 }
 
+/* Для дуже маленьких екранів */
+@media (max-width: 480px) {
+  .floating-actions {
+    bottom: 80px;
+    padding: 0 16px;
+  }
+
+  .main-chat-btn, .scroll-up-btn, .chat-option {
+    width: 44px;
+    height: 44px;
+  }
+
+  .chat-options {
+    bottom: 60px;
+    gap: 10px;
+  }
+}
