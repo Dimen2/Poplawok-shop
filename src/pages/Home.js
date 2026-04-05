@@ -33,6 +33,8 @@ import carppro from "./Photos/carp-pro.png";
 import corona from "./Photos/corona.png";
 import fishingRoi from "./Photos/fishing-roi.png";
 import spinnex from "./Photos/spinnex.png";
+import CodeBox from "./Photos/CodeBox.png";
+
 
 function Home() {
     const { addToCart, toggleFavorite, isFavorite } = useCart();
@@ -110,11 +112,10 @@ function Home() {
 
     const hitProducts = products.filter(p => p.isHit).slice(0, 4);
     const discountProducts = products.filter(p => p.discount).slice(0, 4);
-    const sponsors = [bounty, brain, carppro, corona, fishingRoi, spinnex];
+    const sponsors = [bounty, brain, carppro, corona, fishingRoi, spinnex, CodeBox];
 
     return (
         <div className="home-page">
-            {/* Головний банер */}
             <section className="hero-section">
                 <div className="hero-banner">
                     <button className="banner-arrow banner-arrow-left" onClick={handleBannerPrev}><ChevronLeft size={30} /></button>
